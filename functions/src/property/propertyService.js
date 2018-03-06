@@ -5,26 +5,26 @@ const collectionRef = db.collection('properties')
 
 const getPropertyDataById = (id) => {
   return _getDocById(id).get()
-    .then(doc => {
+    .then((doc) => {
       return doc.exists ? doc.data() : null
     })
 }
 
-const getPropertiesDataByConditions = (conditions, dateRange) => {
-  return _queryByConditions(conditions, dateRange)
-    .then(snapshot => {
-      let list = []
-
-      snapshot.forEach(doc => {
-        list.push(doc.data())
-      })
-
-      return list
-    })
+const getPropertiesDataByConditions = (conditions, params) => {
+  return _queryByConditions(conditions, params)
+    .then((snapshot) => _getDataGroupsFromSnapshot(snapshot, 'projectName'))
 }
 
 const savePropertyData = (id, data, batch) => {
-  let { submittedTime } = data
+  let {
+    price,
+    submittedTime
+  } = data
+
+  // Ensure valid price
+  if (price) {
+    data.price = Number(price)
+  }
 
   // Ensure valid submitted date
   if (submittedTime) {
@@ -52,7 +52,6 @@ const deletePropertyDataById = (id) => {
 }
 
 const deleteMultiplePropertyData = (idList) => {
-  // TODO: test
   let batch = db.batch()
 
   idList.forEach((id) => {
@@ -62,10 +61,10 @@ const deleteMultiplePropertyData = (idList) => {
   return batch.commit()
 }
 
-const deletePropertiesDataByConditions = (conditions, dateRange) => {
+const deletePropertiesDataByConditions = (conditions, params) => {
   let batch = db.batch()
 
-  return _queryByConditions(conditions, dateRange)
+  return _queryByConditions(conditions, params)
     .then(snapshot => {
       snapshot.forEach(doc => {
         _deleteDocById(doc.data().id, batch)
@@ -93,30 +92,43 @@ const _deleteDocById = (id, batch) => {
   return batch ? batch.delete(docRef) : docRef.delete()
 }
 
-const _queryByConditions = (conditions, dateRange) => {
-  let query = _getQueryByConditions(conditions, dateRange)
+const _queryByConditions = (conditions, params) => {
+  let query = _getQueryByConditions(conditions, params)
 
   return query.get()
 }
 
-const _getQueryByConditions = (conditions, dateRange) => {
-  let { start, end } = dateRange
+const _getQueryByConditions = (conditions, params) => {
+  let {
+    start,
+    end,
+    orderBy,
+    limit
+  } = params
+
   let query = collectionRef
 
-  if (Object.keys(conditions) > 0 || start || end) {
-    for (let key in conditions) {
-      query = query.where(key, '==', conditions[key])
-    }
+  for (let key in conditions) {
+    query = query.where(key, '==', conditions[key])
+  }
 
-    if (start) {
-      let startTime = _getTimestampString(start)
-      query = query.where('lastUpdatedTime', '>=', startTime)
-    }
+  if (start) {
+    let startTime = _getTimestampString(start)
+    query = query.where('lastUpdatedTime', '>=', startTime)
+  }
 
-    if (end) {
-      let endTime =  _getTimestampString(end)
-      query = query.where('lastUpdatedTime', '<=', endTime)
-    }
+  if (end) {
+    let endTime =  _getTimestampString(end)
+    query = query.where('lastUpdatedTime', '<=', endTime)
+  }
+
+  if (orderBy) {
+    query = query.orderBy(...orderBy.split(':'))
+  }
+
+  limit = Number(limit)
+  if (limit > 0) {
+    query = query.limit(limit)
   }
 
   return query
@@ -136,6 +148,20 @@ const _getTimestampString = (value) => {
   }
 
   return timestamp
+}
+
+const _getDataGroupsFromSnapshot = (snapshot, groupBy) => {
+  let groups = {}
+
+  snapshot.forEach((doc) => {
+    let data = doc.data()
+    let groupKey = data[groupBy] || ''
+
+    groups[groupKey] = groups[groupKey] || []
+    groups[groupKey].push(data)
+  })
+
+  return groups
 }
 
 module.exports = {

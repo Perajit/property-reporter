@@ -8,9 +8,9 @@ const getPropertyById = (resultName, req, res) => {
 
 const getPropertiesByConditions = (resultName, req, res) => {
   let query = req.query
-  let { conditions, dateRange } = _extractConditions(query)
+  let { conditions, params } = _extractQueryArguments(query)
 
-  _execute(propertyService.getPropertiesDataByConditions(conditions, dateRange), resultName, res)
+  _execute(propertyService.getPropertiesDataByConditions(conditions, params), resultName, res)
 }
 
 const saveProperty = (resultName, req, res) => {
@@ -34,19 +34,22 @@ const deletePropertyById = (resultName, req, res) => {
 
 const deletePropertiesByConditions = (resultName, req, res) => {
   let query = req.query
-  let { conditions, dateRange } = _extractConditions(query)
+  let { conditions, params } = _extractQueryArguments(query)
 
-  _execute(propertyService.deletePropertiesDataByConditions(conditions, dateRange), resultName, res)
+  _execute(propertyService.deletePropertiesDataByConditions(conditions, params), resultName, res)
 }
 
-const _extractConditions = (query) => {
-  let { start, end, ...conditions } = query
-  let dateRange = {
-    start: query.start,
-    end: query.end
+const _extractQueryArguments = (query) => {
+  let { start, end, orderBy, limit, ...conditions } = query
+
+  let params = {
+    start,
+    end,
+    orderBy,
+    limit
   }
 
-  return { conditions, dateRange }
+  return { conditions, params }
 }
 
 const _execute = (query, resultName, res) => {
