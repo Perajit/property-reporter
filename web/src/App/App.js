@@ -1,20 +1,23 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom'
+
 import HomePage from '../HomePage'
 import DataPage from '../DataPage'
 
-const App = () => (
-  <div>
+const PROPERTIES_ENDPOINT = 'http://localhost:5000/api/properties'
+
+const App = () => {
+  return (
     <Router>
       <div>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/data" component={DataPage} />
+        <Route exact path="/" component={ HomePage } />
+        <Route exact path="/data" component={ DataPage } />
       </div>
     </Router>
-  </div>
-)
+  )
+}
 
 export default App
