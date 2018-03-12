@@ -1,9 +1,9 @@
-import { propertyService } from '../_services'
+import { propertyService } from 'services'
 import {
   GET_PROPERTIES_REQUEST,
   GET_PROPERTIES_SUCCESS,
   GET_PROPERTIES_FAILURE
-} from '../_constants/actionTypes'
+} from 'constants/actionTypes'
 
 export const loadProperties = () => {
   const createRequestAction = () => ({ type: GET_PROPERTIES_REQUEST })

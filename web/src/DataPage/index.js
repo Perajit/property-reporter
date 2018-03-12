@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  loadProperties
-} from '../_actions/property'
+import { loadProperties } from 'actions/property'
 import DataPage from './DataPage'
 
 class DataPageContainer extends Component {

@@ -7,7 +7,7 @@ import {
   HorizontalGridLines,
   HorizontalBarSeries
 } from 'react-vis'
-import { formatSiPrefix } from '../../../_helpers/format'
+import { formatSiPrefix } from 'helpers/format'
 
 class PropertySummaryChart extends Component {
   render() {

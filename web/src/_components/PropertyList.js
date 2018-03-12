@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { formatDecimal, formatCurrency } from '../_helpers/format'
+import { formatDecimal, formatCurrency } from 'helpers/format'
 
 const PropertyList = (props) => {
   const { data } = props

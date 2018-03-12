@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { formatCurrency } from '../../../_helpers/format'
+import { formatCurrency } from 'helpers/format'
 
 const PropertySummaryList = (props) => {
   const { data } = props

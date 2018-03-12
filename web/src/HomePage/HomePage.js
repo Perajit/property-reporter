@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-
-import PropertySummary from '../_components/PropertySummary'
+import PropertySummary from 'components/PropertySummary'
 
 class HomePage extends Component {
   render() {

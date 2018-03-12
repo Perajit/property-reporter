@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-
-import PropertySearchBar from '../_components/PropertySearchBar'
-import PropertyList from '../_components/PropertyList'
+import PropertySearchBar from 'components/PropertySearchBar'
+import PropertyList from 'components/PropertyList'
 
 class DataPage extends Component {
   state = {

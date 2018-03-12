@@ -1,6 +1,6 @@
 import {
   PROPERTIES_ENDPOINT
-} from '../_constants/endpoints'
+} from 'constants/endpoints'
 
 const getProperties = () => {
   return fetch(PROPERTIES_ENDPOINT)

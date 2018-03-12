@@ -1,6 +1,6 @@
 import {
   GET_PROPERTIES_SUCCESS
-} from '../_constants/actionTypes'
+} from 'constants/actionTypes'
 
 const initialState = {}
 

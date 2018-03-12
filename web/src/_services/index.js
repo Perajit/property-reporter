@@ -1,1 +1,1 @@
-export propertyService from './property'
+export { default as propertyService } from './property'

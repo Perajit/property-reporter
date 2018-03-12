@@ -1,5 +1,5 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
@@ -30,5 +30,15 @@ module.exports = {
       title: 'Property Reporter',
       template: './src/template.html'
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      actions: path.resolve(__dirname, 'src/_actions'),
+      constants: path.resolve(__dirname, 'src/_constants'),
+      components: path.resolve(__dirname, 'src/_components'),
+      helpers: path.resolve(__dirname, 'src/_helpers'),
+      reducers: path.resolve(__dirname, 'src/_reducers'),
+      services: path.resolve(__dirname, 'src/_services')
+    }
+  }
 }
