@@ -1,0 +1,8 @@
+.property-summary-chart .rv-xy-plot__axis--vertical .rv-xy-plot__axis__ticks {
+  transform: translateX(calc(100% - 5px)) !important;
+  text-shadow: white;
+}
+
+.property-summary-chart .rv-xy-plot__axis__tick__line {
+  display: none;
+}

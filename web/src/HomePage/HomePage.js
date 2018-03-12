@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-// FIXME: Add components
-const HomePage = () => (
-  <div>Home Page</div>
-)
+import PropertySummary from '../_components/PropertySummary'
+
+class HomePage extends Component {
+  render() {
+    return (
+      <div>
+        <h2>Summary</h2>
+        <PropertySummary
+          data={ this.props.properties }
+        />
+      </div>
+    )
+  }
+}
 
 export default HomePage

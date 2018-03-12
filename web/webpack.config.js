@@ -15,7 +15,14 @@ module.exports = {
         loaders: [
           'babel-loader'
         ]
-      }
+      },
+      {
+        test: /\.css$/,
+        loaders: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
     ]
   },
   plugins: [
