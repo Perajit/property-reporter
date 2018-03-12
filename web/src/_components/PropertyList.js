@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import { formatDecimal, formatCurrency } from '../_helpers/format'
 
 const PropertyList = (props) => {
   const { data } = props
@@ -53,14 +54,6 @@ function mapDataToDom(dataItem, key) {
       </td>
     </tr>
   )
-}
-
-function formatDecimal(n, decimalPoint = 2) {
-  return Number(n.toFixed(decimalPoint)).toLocaleString()
-}
-
-function formatCurrency(n) {
-  return `฿${formatDecimal(n)}`
 }
 
 export default PropertyList

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import PropertySummaryChart from './PropertySummaryChart'
+import PropertySummaryList from './PropertySummaryList'
 
 class PropertySummary extends Component {
   state = {
+    summaryList: [],
     priceChartSeries: {
       minSeries: [],
       maxSeries: [],
@@ -23,19 +25,28 @@ class PropertySummary extends Component {
 
   render() {
     const { data } = this.props
-    const { priceChartSeries, ppsChartSeries } = this.state
+    const { priceChartSeries, ppsChartSeries, summaryList } = this.state
     const chartOptions = { width: 500 }
 
     return (
       <div>
-        { generateChart('Price', priceChartSeries, chartOptions) }
-        { generateChart('Price / Size', ppsChartSeries, chartOptions) }
+        { createListSection(summaryList) }
+        { createChartSection('Price', priceChartSeries, chartOptions) }
+        { createChartSection('Price / Size', ppsChartSeries, chartOptions) }
       </div>
     )
   }
 }
 
-function generateChart(chartTitle, chartSeries, chartOptions) {
+function createListSection(summaryList) {
+  return (
+    <PropertySummaryList
+      data={ summaryList }
+    />
+  )
+}
+
+function createChartSection(chartTitle, chartSeries, chartOptions) {
   return (
     <PropertySummaryChart
       title={ chartTitle }
@@ -56,6 +67,8 @@ function mapDataToState(data) {
     maxSeries: [],
     avgSeries: []
   }
+  let summaryList = []
+  let unknownProjectSummary = null
 
   Object.entries(data)
     .forEach(([ projectName, items ]) => {
@@ -95,6 +108,16 @@ function mapDataToState(data) {
 
       let avgPrice = sumPrice / totalItems
       let avgPps = sumPps / totalItems
+      let priceSummary = { min: minPrice, max: maxPrice, avg: avgPrice }
+      let ppsSummary = { min: minPps, max: maxPps, avg: avgPps }
+      let summary = { projectName, totalItems, priceSummary, ppsSummary }
+
+      if (projectName) {
+        summaryList.push(summary)
+      }
+      else {
+        unknownProjectSummary = summary
+      }
 
       priceChartSeries.minSeries.push({ y: projectName, x: minPrice })
       priceChartSeries.maxSeries.push({ y: projectName, x: maxPrice })
@@ -105,7 +128,11 @@ function mapDataToState(data) {
       ppsChartSeries.avgSeries.push({ y: projectName, x: avgPps })
     })
 
-  return { priceChartSeries, ppsChartSeries }
+  if (unknownProjectSummary) {
+    summaryList.push(unknownProjectSummary)
+  }
+
+  return { summaryList, priceChartSeries, ppsChartSeries }
 }
 
 export default PropertySummary

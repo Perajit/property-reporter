@@ -7,7 +7,7 @@ import {
   HorizontalGridLines,
   HorizontalBarSeries
 } from 'react-vis'
-import { format } from 'd3-format'
+import { formatSiPrefix } from '../../../_helpers/format'
 
 class PropertySummaryChart extends Component {
   render() {
@@ -35,7 +35,6 @@ class PropertySummaryChart extends Component {
           height={ height || ( 40 * minSeries.length ) }
           margin={ { left: 0 } }
           className="property-summary-chart"
-          animation="gentle"
         >
           <VerticalGridLines />
           <HorizontalGridLines />
@@ -51,7 +50,7 @@ class PropertySummaryChart extends Component {
             color="#FFCB99"
             data={ maxSeries }
           />
-          <XAxis tickFormat={ tick => format('.2s')(tick) } />
+          <XAxis tickFormat={ formatSiPrefix } />
           <YAxis />
         </XYPlot>
       </div>
