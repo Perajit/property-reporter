@@ -1,28 +1,29 @@
 import React from 'react'
 import moment from 'moment'
+import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
 import { formatDecimal, formatCurrency } from 'helpers/format'
 
 const PropertyList = (props) => {
   const { data } = props
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Project Name</th>
-          <th>Size</th>
-          <th>Price</th>
-          <th>Price / Size</th>
-          <th>Bedrooms</th>
-          <th>Bathrooms</th>
-          <th>Last Updated</th>
-          <th>Detail</th>
-        </tr>
-      </thead>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>Project Name</TableCell>
+          <TableCell>Size</TableCell>
+          <TableCell>Price</TableCell>
+          <TableCell>Price / Size</TableCell>
+          <TableCell>Bedrooms</TableCell>
+          <TableCell>Bathrooms</TableCell>
+          <TableCell>Last Updated</TableCell>
+          <TableCell>Detail</TableCell>
+        </TableRow>
+      </TableHead>
       <tbody>
         { data.map(mapDataToDom) }
       </tbody>
-    </table>
+    </Table>
   )
 }
 
@@ -39,20 +40,20 @@ function mapDataToDom(dataItem, key) {
   } = dataItem
   
   return (
-    <tr
+    <TableRow
       key={ key }
     >
-      <td>{ projectName || 'N/A' }</td>
-      <td>{ formatDecimal(size, 0) } sqm</td>
-      <td>{ formatCurrency(Number(price)) }</td>
-      <td>{ formatCurrency(Number(price / size)) }</td>
-      <td>{ bedrooms }</td>
-      <td>{ bathrooms }</td>
-      <td>{ moment(Number(lastUpdatedTime)).format('DD/MM/YYYY') }</td>
-      <td>
+      <TableCell>{ projectName || 'N/A' }</TableCell>
+      <TableCell>{ formatDecimal(size, 0) } sqm</TableCell>
+      <TableCell>{ formatCurrency(Number(price)) }</TableCell>
+      <TableCell>{ formatCurrency(Number(price / size)) }</TableCell>
+      <TableCell>{ bedrooms }</TableCell>
+      <TableCell>{ bathrooms }</TableCell>
+      <TableCell>{ moment(Number(lastUpdatedTime)).format('DD/MM/YYYY') }</TableCell>
+      <TableCell>
         <a target="_blank" href={ detailUrl }>Detail</a>
-      </td>
-    </tr>
+      </TableCell>
+    </TableRow>
   )
 }
 

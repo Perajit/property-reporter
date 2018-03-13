@@ -5,8 +5,8 @@ class HomePage extends Component {
   render() {
     return (
       <div>
-        <h2>Summary</h2>
         <PropertySummary
+          title="Property Summary"
           data={ this.props.properties }
         />
       </div>

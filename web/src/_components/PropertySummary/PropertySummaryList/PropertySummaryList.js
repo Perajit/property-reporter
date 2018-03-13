@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
+import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
 import { formatCurrency } from 'helpers/format'
 
 const PropertySummaryList = (props) => {
@@ -6,21 +7,33 @@ const PropertySummaryList = (props) => {
 
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Project Name</th>
-            <th>Total Items</th>
-            <th>Price (Min - Max)</th>
-            <th>Price (Average)</th>
-            <th>Price / Size (Min - Max)</th>
-            <th>Price / Size (Average)</th>
-          </tr>
-        </thead>
+      <Table className="property-summary-table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Project Name</TableCell>
+            <TableCell>Total Items</TableCell>
+            <TableCell>
+              <div>Price</div>
+              <div>(Min - Max)</div>
+            </TableCell>
+            <TableCell>
+              <div>Price</div>
+              <div>(Average)</div>
+            </TableCell>
+            <TableCell>
+              <div>Price / Sqm</div>
+              <div>(Min - Max)</div>
+            </TableCell>
+            <TableCell>
+              <div>Price / Sqm</div>
+              <div>(Average)</div>
+            </TableCell>
+          </TableRow>
+        </TableHead>
         <tbody>
           { data.map(mapDataToDom) }
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }
@@ -34,16 +47,16 @@ function mapDataToDom(dataItem, key) {
   } = dataItem
   
   return (
-    <tr
+    <TableRow
       key={ key }
     >
-      <td>{ projectName || 'N/A' }</td>
-      <td>{ totalItems }</td>
-      <td>{ formatCurrency(priceSummary.min) } - { formatCurrency(priceSummary.max) }</td>
-      <td>{ formatCurrency(priceSummary.avg) }</td>
-      <td>{ formatCurrency(ppsSummary.min) } - { formatCurrency(ppsSummary.max) }</td>
-      <td>{ formatCurrency(ppsSummary.avg) }</td>
-    </tr>
+      <TableCell>{ projectName || 'N/A' }</TableCell>
+      <TableCell>{ totalItems }</TableCell>
+      <TableCell>{ formatCurrency(priceSummary.min) } - { formatCurrency(priceSummary.max) }</TableCell>
+      <TableCell>{ formatCurrency(priceSummary.avg) }</TableCell>
+      <TableCell>{ formatCurrency(ppsSummary.min) } - { formatCurrency(ppsSummary.max) }</TableCell>
+      <TableCell>{ formatCurrency(ppsSummary.avg) }</TableCell>
+    </TableRow>
   )
 }
 
