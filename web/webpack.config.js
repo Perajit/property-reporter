@@ -38,7 +38,8 @@ module.exports = {
       components: path.resolve(__dirname, 'src/_components'),
       helpers: path.resolve(__dirname, 'src/_helpers'),
       reducers: path.resolve(__dirname, 'src/_reducers'),
-      services: path.resolve(__dirname, 'src/_services')
+      services: path.resolve(__dirname, 'src/_services'),
+      node_modules: path.resolve(__dirname, 'node_modules')
     }
   }
 }
