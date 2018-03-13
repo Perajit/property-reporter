@@ -1,17 +1,20 @@
 import React, { Component } from 'react'
 import PropertySummary from 'components/PropertySummary'
 
-class HomePage extends Component {
-  render() {
-    return (
-      <div>
-        <PropertySummary
-          title="Property Summary"
-          data={ this.props.properties }
-        />
-      </div>
-    )
-  }
+const HomePage = (props) => {
+  const title = "Property Summary"
+  const detailLink = "/data"
+  const { properties } = props
+
+  return (
+    <div>
+      <PropertySummary
+        title={ title }
+        data={ properties }
+        detailLink={ detailLink }
+      />
+    </div>
+  )
 }
 
 export default HomePage

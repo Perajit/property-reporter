@@ -1,5 +1,7 @@
 import React from 'react'
-import Card, { CardActions, CardContent } from 'material-ui/Card'
+import { Link } from 'react-router-dom'
+import Card,{ CardActions, CardContent } from 'material-ui/Card'
+import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import PropertySummaryList from '../PropertySummaryList'
 import PropertySummaryChart from '../PropertySummaryChart'
@@ -13,7 +15,8 @@ const PropertySummaryCard = (props) => {
       summaryListData,
       priceChartData,
       ppsChartData
-    }
+    },
+    detailLink
   } = props
 
   return (
@@ -27,6 +30,7 @@ const PropertySummaryCard = (props) => {
           { createChartSection('Price', priceChartData, chartOptions) }
           { createChartSection('Price / Size', ppsChartData, chartOptions) }
         </CardContent>
+        { detailLink ? createCardAction(detailLink) : null }
       </Card>
     </div>
   )
@@ -47,6 +51,19 @@ function createChartSection(chartTitle, chartData, chartOptions) {
       data={ chartData }
       options={ chartOptions }
     />
+  )
+}
+
+function createCardAction(detailLink) {
+  return (
+    <CardActions>
+      <Button
+        component={  Link }
+        to={ detailLink }
+      >
+        View Detail
+      </Button>
+    </CardActions>
   )
 }
 

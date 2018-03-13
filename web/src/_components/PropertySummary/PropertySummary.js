@@ -2,12 +2,13 @@ import React from 'react'
 import PropertySummaryCard from './PropertySummaryCard'
 
 const PropertySummary = (props) => {
-  const { title, data } = props
+  const { title, data, detailLink } = props
 
   return (
     <PropertySummaryCard
       title={ title }
       data={ mapDataToCardData(data) }
+      detailLink={ detailLink }
     />
   )
 }
