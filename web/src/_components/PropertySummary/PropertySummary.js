@@ -1,19 +1,29 @@
 import React from 'react'
-import PropertySummaryCard from './PropertySummaryCard'
+import PropertySummaryTable from './PropertySummaryTable'
+import PropertySummaryChart from './PropertySummaryChart'
+
+const chartOptions = { width: 500 }
 
 const PropertySummary = (props) => {
-  const { title, data, detailLink } = props
+  const {
+    data: {
+      list,
+      overall
+    }
+  } = props
+  const overallRowData = Object.assign({ projectName: 'Overall', highlight: true }, overall)
+  const { priceChartData, ppsChartData } = mapListToChartData(list)
 
   return (
-    <PropertySummaryCard
-      title={ title }
-      data={ mapDataToCardData(data) }
-      detailLink={ detailLink }
-    />
+    <div>
+      { createListSection(list.concat(overallRowData)) }
+      { createChartSection('Price', priceChartData, chartOptions) }
+      { createChartSection('Price / Size', ppsChartData, chartOptions) }
+    </div>
   )
 }
 
-function mapDataToCardData(data) {
+function mapListToChartData(list) {
   let priceChartData = {
     minSeries: [],
     maxSeries: [],
@@ -24,72 +34,40 @@ function mapDataToCardData(data) {
     maxSeries: [],
     avgSeries: []
   }
-  let summaryListData = []
-  let unknownProjectSummary = null
 
-  Object.entries(data)
-    .forEach(([ projectName, items ]) => {
-      let totalItems = items.length
-      let sumPrice = 0
-      let sumPps = 0
-      let minPrice, minPps, maxPrice, maxPps
+  list.forEach((item) => {
+    const {
+      projectName,
+      priceSummary,
+      ppsSummary
+    } = item
 
-      items.forEach((item, i) => {
-        let { price, size } = item
-        let pps = Math.round(price / size)
+    priceChartData.minSeries.push({ y: projectName, x: priceSummary.min })
+    priceChartData.maxSeries.push({ y: projectName, x: priceSummary.max })
+    priceChartData.avgSeries.push({ y: projectName, x: priceSummary.avg })
 
-        if (i) {
-          if (price < minPrice) {
-            minPrice = price
-          }
-          if (pps < minPps) {
-            minPps = pps
-          }
-          if (price > maxPrice) {
-            maxPrice = price
-          }
-          if (pps > maxPps) {
-            maxPps = pps
-          }
-        }
-        else {
-          minPrice = price
-          minPps = pps
-          maxPrice = price
-          maxPps = pps
-        }
+    ppsChartData.minSeries.push({ y: projectName, x: ppsSummary.min })
+    ppsChartData.maxSeries.push({ y: projectName, x: ppsSummary.max })
+    ppsChartData.avgSeries.push({ y: projectName, x: ppsSummary.avg })
+  })
 
-        sumPrice += price
-        sumPps += pps
-      })
+  return { priceChartData, ppsChartData }
+}
 
-      let avgPrice = sumPrice / totalItems
-      let avgPps = sumPps / totalItems
-      let priceSummary = { min: minPrice, max: maxPrice, avg: avgPrice }
-      let ppsSummary = { min: minPps, max: maxPps, avg: avgPps }
-      let summary = { projectName, totalItems, priceSummary, ppsSummary }
+function createListSection(list) {
+  return (
+    <PropertySummaryTable data={ list } />
+  )
+}
 
-      if (projectName) {
-        summaryListData.push(summary)
-      }
-      else {
-        unknownProjectSummary = summary
-      }
-
-      priceChartData.minSeries.push({ y: projectName, x: minPrice })
-      priceChartData.maxSeries.push({ y: projectName, x: maxPrice })
-      priceChartData.avgSeries.push({ y: projectName, x: avgPrice })
-
-      ppsChartData.minSeries.push({ y: projectName, x: minPps })
-      ppsChartData.maxSeries.push({ y: projectName, x: maxPps })
-      ppsChartData.avgSeries.push({ y: projectName, x: avgPps })
-    })
-
-  if (unknownProjectSummary) {
-    summaryListData.push(unknownProjectSummary)
-  }
-
-  return { summaryListData, priceChartData, ppsChartData }
+function createChartSection(chartTitle, chartData, chartOptions) {
+  return (
+    <PropertySummaryChart
+      title={ chartTitle }
+      data={ chartData }
+      options={ chartOptions }
+    />
+  )
 }
 
 export default PropertySummary

@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { loadProperties } from 'actions/property'
+import { loadProperties, deleteProperties } from 'actions/property'
 import DataPage from './DataPage'
 
 class DataPageContainer extends Component {
-  onLoadProperties = () => {
+  handleLoadProperties = () => {
     this.props.onLoadProperties()
+  }
+
+  handleDeleteProperties = (ids) => {
+    this.props.onDeleteProperties(ids)
   }
 
   shouldComponentUpdate(nextProps) {
@@ -13,13 +17,14 @@ class DataPageContainer extends Component {
   }
 
   componentDidMount() {
-    this.onLoadProperties()
+    this.handleLoadProperties()
   }
   
   render() {
     return (
       <DataPage
         properties={ this.props.properties }
+        onDeleteProperties={ this.handleDeleteProperties }
       />
     )
   }
@@ -30,7 +35,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onLoadProperties: () => dispatch(loadProperties())
+  onLoadProperties: () => dispatch(loadProperties()),
+  onDeleteProperties: (ids) => dispatch(deleteProperties(ids))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataPageContainer)

@@ -3,6 +3,9 @@ const propertyController = require('./propertyController')
 
 const router = express.Router()
 
+router.get('/summary', (req, res) => {
+  propertyController.getPropertiesSummary('propertySummary', req, res)
+})
 router.get('/:id', (req, res) => {
   propertyController.getPropertyById('property', req, res)
 })

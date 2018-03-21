@@ -3,20 +3,14 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom'
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
+import { MuiThemeProvider } from 'material-ui/styles'
+import { createAppTheme } from './AppStyles'
 import HomePage from '../HomePage'
 import DataPage from '../DataPage'
 
-const theme = createMuiTheme({
-  typography: {
-    fontFamily: 'Kanit',
-    htmlFontSize: 13
-  }
-})
-
 const App = () => {
   return (
-    <MuiThemeProvider theme={ theme }>
+    <MuiThemeProvider theme={ createAppTheme() }>
       <Router>
         <div>
           <Route exact path="/" component={ HomePage } />

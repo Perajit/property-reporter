@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
-import PropertySummary from 'components/PropertySummary'
+import { PropertySummaryCard } from 'components/PropertySummary'
 
 const HomePage = (props) => {
   const title = "Property Summary"
   const detailLink = "/data"
-  const { properties } = props
+  const { propertySummary } = props
 
   return (
     <div>
-      <PropertySummary
+      <PropertySummaryCard
         title={ title }
-        data={ properties }
+        data={ propertySummary }
         detailLink={ detailLink }
       />
     </div>

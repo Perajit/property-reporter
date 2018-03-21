@@ -1,36 +1,34 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { loadProperties } from 'actions/property'
+import { loadPropertySummary } from 'actions/property'
 import HomePage from './HomePage'
 
 class HomePageContainer extends Component {
-  onLoadProperties = () => {
-    this.props.onLoadProperties()
+  onLoadPropertySummary = () => {
+    this.props.onLoadPropertySummary()
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.props.properties !== nextProps.properties
+    return this.props.propertySummary !== nextProps.propertySummary
   }
 
   componentDidMount() {
-    this.onLoadProperties()
+    this.onLoadPropertySummary()
   }
   
   render() {
     return (
-      <HomePage
-        properties={ this.props.properties }
-      />
+      <HomePage propertySummary={ this.props.propertySummary } />
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  properties: state.properties
+  propertySummary: state.propertySummary
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onLoadProperties: () => dispatch(loadProperties())
+  onLoadPropertySummary: () => dispatch(loadPropertySummary())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePageContainer)

@@ -9,8 +9,17 @@ const getPropertyById = (resultName, req, res) => {
 const getPropertiesByConditions = (resultName, req, res) => {
   let query = req.query
   let { conditions, params } = _extractQueryArguments(query)
+  
+  params.orderBy = params.orderBy || 'projectName'
 
   _execute(propertyService.getPropertiesDataByConditions(conditions, params), resultName, res)
+}
+
+const getPropertiesSummary = (resultName, req, res) => {
+  let query = req.query
+  let { conditions, params } = _extractQueryArguments(query)
+
+  _execute(propertyService.getPropertiesSummaryData(conditions, params), resultName, res)
 }
 
 const saveProperty = (resultName, req, res) => {
@@ -34,13 +43,18 @@ const deletePropertyById = (resultName, req, res) => {
 
 const deletePropertiesByConditions = (resultName, req, res) => {
   let query = req.query
-  let { conditions, params } = _extractQueryArguments(query)
+  let { ids, conditions, params } = _extractQueryArguments(query)
 
-  _execute(propertyService.deletePropertiesDataByConditions(conditions, params), resultName, res)
+  if (ids) {
+    _execute(propertyService.deletePropertiesDataByIdList(ids.split(',')), resultName, res)
+  }
+  else {
+    _execute(propertyService.deletePropertiesDataByConditions(conditions, params), resultName, res)
+  }
 }
 
 const _extractQueryArguments = (query) => {
-  let { start, end, orderBy, limit, ...conditions } = query
+  let { ids, start, end, orderBy, limit, ...conditions } = query
 
   let params = {
     start,
@@ -49,7 +63,7 @@ const _extractQueryArguments = (query) => {
     limit
   }
 
-  return { conditions, params }
+  return { ids, conditions, params }
 }
 
 const _execute = (query, resultName, res) => {
@@ -71,6 +85,7 @@ const _execute = (query, resultName, res) => {
 module.exports = {
   getPropertyById,
   getPropertiesByConditions,
+  getPropertiesSummary,
   saveProperty,
   saveMultipleProperties,
   deletePropertyById,

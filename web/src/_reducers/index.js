@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
-import propertyReducer from './property'
+import properties from './properties'
+import propertySummary from './propertySummary'
 
 const rootReducer = combineReducers({
-  properties: propertyReducer
+  properties,
+  propertySummary
 })
 
 export default rootReducer

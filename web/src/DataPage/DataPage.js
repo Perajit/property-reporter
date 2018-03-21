@@ -1,38 +1,19 @@
-import React, { Component } from 'react'
-import PropertySearchBar from 'components/PropertySearchBar'
+import React from 'react'
 import PropertyList from 'components/PropertyList'
 
-class DataPage extends Component {
-  state = {
-    filter: {},
-  }
+const DataPage = (props) => {
+  const { properties, onDeleteProperties } = props
 
-  handleChangeFilter = (filter) => {
-    this.setState({ filter })
-  }
-
-  render() {
-    return (
-      <div>
-        <PropertySearchBar
-          onChangeFilter={ this.handleChangeFilter }
-        />
-        <PropertyList
-          data={ filterData(this.props.properties, this.state.filter) }
-        />
-      </div>
-    )
-  }
+  return (
+    <PropertyList
+      data={ mapToPropertyList(properties) }
+      onDeleteProperties={ onDeleteProperties }
+    />
+  )
 }
 
-function filterData(data, filter) {
+function mapToPropertyList(data) {
   let entries = Object.entries(data)
-  let filterKeyword = filter.keyword
-
-  if (filterKeyword) {
-    let pattern = new RegExp(`^${filterKeyword}`, 'i')
-    entries = entries.filter(([ projectName, items ]) => projectName.match(pattern))
-  }
 
   return entries.reduce((allItems, [ projectName, items ]) => allItems.concat(items), [])
 }

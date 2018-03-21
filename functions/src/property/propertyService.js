@@ -12,7 +12,12 @@ const getPropertyDataById = (id) => {
 
 const getPropertiesDataByConditions = (conditions, params) => {
   return _queryByConditions(conditions, params)
-    .then((snapshot) => _getDataGroupsFromSnapshot(snapshot, 'projectName'))
+    .then((snapshot) => _getDataListFromSnapshot(snapshot))
+}
+
+const getPropertiesSummaryData = (conditions, params) => {
+  return _queryByConditions(conditions, params)
+    .then((snapshot) => _getSummaryDataFromSnapshot(snapshot))
 }
 
 const savePropertyData = (id, data, batch) => {
@@ -51,7 +56,7 @@ const deletePropertyDataById = (id) => {
   return _deleteDocById(id)
 }
 
-const deleteMultiplePropertyData = (idList) => {
+const deletePropertiesDataByIdList = (idList) => {
   let batch = db.batch()
 
   idList.forEach((id) => {
@@ -109,7 +114,8 @@ const _getQueryByConditions = (conditions, params) => {
   let query = collectionRef
 
   for (let key in conditions) {
-    query = query.where(key, '==', conditions[key])
+    let value = conditions[key]
+    query = query.where(key, '==', value)
   }
 
   if (start) {
@@ -150,12 +156,84 @@ const _getTimestampString = (value) => {
   return timestamp
 }
 
-const _getDataGroupsFromSnapshot = (snapshot, groupBy) => {
+const _getDataListFromSnapshot = (snapshot) => {
+  let list = []
+  let unknownProjectList = []
+
+  snapshot.forEach((doc) => {
+    let data = doc.data()
+    let targetList = data.projectName ? list : unknownProjectList
+
+    targetList.push(data)
+  })
+
+  return list.concat(unknownProjectList)
+}
+
+const _getSummaryDataFromSnapshot = (snapshot) => {
+  let dataGroups = _getDataGroupsFromSnapshot(snapshot)
+  let summaryList = []
+  let unknownProjectSummary = null
+  let overallTotalItems = 0
+  let overallStats = null
+
+  Object.entries(dataGroups).forEach(([ projectName, items ]) => {
+    let totalItems = items.length
+    let groupStats = _calculateGroupStats(items)
+    let summary = {
+      projectName,
+      totalItems,
+      priceSummary: {
+        min: groupStats.minPrice,
+        max: groupStats.maxPrice,
+        avg: groupStats.sumPrice / totalItems
+      },
+      ppsSummary: {
+        min: groupStats.minPps,
+        max: groupStats.maxPps,
+        avg: groupStats.sumPps / totalItems
+      }
+    }
+
+    if (projectName) {
+      summaryList.push(summary)
+    }
+    else {
+      unknownProjectSummary = summary
+    }
+
+    // Calculate overall
+    overallTotalItems += totalItems
+    overallStats = _calculateNewStats(overallStats, groupStats)
+  })
+
+  if (unknownProjectSummary) {
+    summaryList.push(unknownProjectSummary)
+  }
+
+  let overallSummary = {
+    totalItems: overallTotalItems,
+    priceSummary: {
+      min: overallStats.minPrice,
+      max: overallStats.maxPrice,
+      avg: overallStats.sumPrice / overallTotalItems
+    },
+    ppsSummary: {
+      min: overallStats.minPps,
+      max: overallStats.maxPps,
+      avg: overallStats.sumPps / overallTotalItems
+    }
+  }
+
+  return { list: summaryList, overall: overallSummary }
+}
+
+const _getDataGroupsFromSnapshot = (snapshot) => {
   let groups = {}
 
   snapshot.forEach((doc) => {
     let data = doc.data()
-    let groupKey = data[groupBy] || ''
+    let groupKey = data.projectName || ''
 
     groups[groupKey] = groups[groupKey] || []
     groups[groupKey].push(data)
@@ -164,11 +242,69 @@ const _getDataGroupsFromSnapshot = (snapshot, groupBy) => {
   return groups
 }
 
+const _calculateGroupStats = (items) => {
+  return items.reduce((existingStats, item) => {
+    let { price, size } = item
+    let pps = Math.round(price / size)
+    let addlStats = {
+      minPrice: price,
+      maxPrice: price,
+      sumPrice: price,
+      minPps: pps,
+      maxPps: pps,
+      sumPps: pps
+    }
+
+    return _calculateNewStats(existingStats, addlStats)
+  }, null)
+}
+
+const _calculateNewStats = (existingStats, addlStats) => {
+  let newStats
+
+  if (existingStats) {
+    let { minPrice, maxPrice, sumPrice, minPps, maxPps, sumPps } = existingStats
+    let addlMinPrice = addlStats.minPrice
+    let addlMaxPrice = addlStats.maxPrice
+    let addlMinPps = addlStats.minPps
+    let addlMaxPps = addlStats.maxPps
+
+    if (addlMinPrice < minPrice) {
+      minPrice = addlMinPrice
+    }
+    if (addlMaxPrice > maxPrice) {
+      maxPrice = addlMaxPrice
+    }
+    if (addlMinPps < minPps) {
+      minPps = addlMinPps
+    }
+    if (addlMaxPps > maxPps) {
+      maxPps = addlMaxPps
+    }
+
+    newStats = {
+      minPrice,
+      maxPrice,
+      sumPrice: sumPrice + addlStats.sumPrice,
+      minPps,
+      maxPps,
+      sumPps: sumPps + addlStats.sumPps
+    }
+  }
+  else {
+    newStats = Object.assign({}, addlStats)
+  }
+
+  return newStats
+}
+
 module.exports = {
   getPropertyDataById,
   getPropertiesDataByConditions,
+  getPropertiesSummaryData,
   savePropertyData,
   saveMultiplePropertyData,
   deletePropertyDataById,
+  deletePropertiesDataByIdList,
   deletePropertiesDataByConditions
 }
