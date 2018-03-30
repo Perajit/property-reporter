@@ -41,5 +41,13 @@ module.exports = {
       services: path.resolve(__dirname, 'src/_services'),
       node_modules: path.resolve(__dirname, 'node_modules')
     }
+  },
+  devServer: {
+    historyApiFallback: true,
+    proxy: {
+      '/api/*': {
+        target: 'http://localhost:5000/' // FIXME
+      }
+    }
   }
 }
