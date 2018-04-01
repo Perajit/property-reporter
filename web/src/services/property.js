@@ -33,7 +33,7 @@ const deleteProperties = (ids) => {
     body: JSON.stringify(ids)
   }
 
-  return request(PROPERTIES_ENDPOINT, requestOptions)
+  return request(`${PROPERTIES_ENDPOINT}?ids=${ids}`, requestOptions)
     .then((json) => json.deletedProperties)
 }
 
