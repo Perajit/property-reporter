@@ -1,4 +1,5 @@
 const admin = require('firebase-admin')
+const _ = require('lodash')
 
 const db = admin.firestore()
 const collectionRef = db.collection('properties')
@@ -177,39 +178,36 @@ const _getSummaryDataFromSnapshot = (snapshot) => {
   let overallStats = null
 
   let dataGroups = _getDataGroupsFromSnapshot(snapshot)
-  let dataGroupEntries = Object.entries(dataGroups)
-
-  if (dataGroupEntries.length) {
-    dataGroupEntries.forEach(([ projectName, items ]) => {
-      let totalItems = items.length
-      let groupStats = _calculateGroupStats(items)
-      let summary = {
-        projectName,
-        totalItems,
-        priceSummary: {
-          min: groupStats.minPrice,
-          max: groupStats.maxPrice,
-          avg: groupStats.sumPrice / totalItems
-        },
-        ppsSummary: {
-          min: groupStats.minPps,
-          max: groupStats.maxPps,
-          avg: groupStats.sumPps / totalItems
-        }
+  
+  _.forOwn(dataGroups, (items, projectName) => {
+    let totalItems = items.length
+    let groupStats = _calculateGroupStats(items)
+    let summary = {
+      projectName,
+      totalItems,
+      priceSummary: {
+        min: groupStats.minPrice,
+        max: groupStats.maxPrice,
+        avg: groupStats.sumPrice / totalItems
+      },
+      ppsSummary: {
+        min: groupStats.minPps,
+        max: groupStats.maxPps,
+        avg: groupStats.sumPps / totalItems
       }
+    }
 
-      if (projectName) {
-        summaryList.push(summary)
-      }
-      else {
-        unknownProjectSummary = summary
-      }
+    if (projectName) {
+      summaryList.push(summary)
+    }
+    else {
+      unknownProjectSummary = summary
+    }
 
-      // Calculate overall
-      overallTotalItems += totalItems
-      overallStats = _calculateNewStats(overallStats, groupStats)
-    })
-  }
+    // Calculate overall
+    overallTotalItems += totalItems
+    overallStats = _calculateNewStats(overallStats, groupStats)
+  })
 
   if (unknownProjectSummary) {
     summaryList.push(unknownProjectSummary)
