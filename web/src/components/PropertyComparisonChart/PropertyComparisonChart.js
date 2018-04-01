@@ -82,7 +82,7 @@ const calculateChartHeight = (data, barHeight) => {
   let totalGroups = lists[0].length 
   let barsPerGroup = lists.length
 
-  return totalGroups * barsPerGroup * barHeight
+  return totalGroups * barsPerGroup * barHeight + 20
 }
 
 export default PropertyComparisonChart
