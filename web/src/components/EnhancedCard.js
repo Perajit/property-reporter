@@ -7,7 +7,7 @@ import grey from 'material-ui/colors/grey'
 
 const styles = (theme) => ({
   title: {
-    borderBottom: `solid 2px ${theme.palette.divider}`,
+    borderBottom: `solid 1px ${theme.palette.divider}`,
     margingBottom: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
     color: theme.palette.secondary.light

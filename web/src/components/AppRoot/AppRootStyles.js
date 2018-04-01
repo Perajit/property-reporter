@@ -1,4 +1,6 @@
 import { createMuiTheme } from 'material-ui/styles'
+import pink from 'material-ui/colors/pink'
+import teal from 'material-ui/colors/teal'
 
 export const createRootTheme = () => {
   let tableStyle = { marginTop: 16, marginBottom: 16 }
@@ -9,6 +11,9 @@ export const createRootTheme = () => {
   let paddingNoneStyle = { padding: 0 }
 
   return createMuiTheme({
+    palette: {
+      primary: teal
+    },
     typography: {
       fontFamily: 'Kanit',
       fontSize: 13

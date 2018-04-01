@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { MuiThemeProvider } from 'material-ui/styles'
 import { createRootTheme } from './AppRootStyles'
 import AppLayout from './AppLayout'
-import AppSidebar from './AppSidebar'
-import AppMain from './AppMain'
+
+const appTitle = 'Property Reporter' // FIXME: Extract to constant
 
 const AppRoot = (props) => {
   let { links, navs } = props
@@ -12,8 +12,8 @@ const AppRoot = (props) => {
   return (
     <MuiThemeProvider theme={ createRootTheme() }>
       <AppLayout
-        sidebarContent={ <AppSidebar links={ links } /> }
-        mainContent={ <AppMain navs={ navs } /> }
+        appTitle={ appTitle }
+        { ...props }
       />
     </MuiThemeProvider>
   )
