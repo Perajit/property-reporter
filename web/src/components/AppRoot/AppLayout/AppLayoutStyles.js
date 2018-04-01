@@ -28,10 +28,10 @@ export const createLayoutStyles = () => {
         overflow: 'auto',
         padding: theme.spacing.unit * 2,
         backgroundColor: bluegrey[800],
-        color: bluegrey[50]
-      },
-      hidden: {
-        display: 'none'
+        color: bluegrey[50],
+        [theme.breakpoints.down('sm')]: {
+          display: 'none'
+        }
       }
     }
   }

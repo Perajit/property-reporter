@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import compose from 'recompose/compose'
 import withWidth from 'material-ui/utils/withWidth'
 import Hidden from 'material-ui/Hidden'
 import AppBar from 'material-ui/AppBar'
@@ -13,9 +12,9 @@ import NavList from 'components/NavList'
 
 class AppToolbar extends Component {
   static propTypes = {
+    width: PropTypes.string.isRequired,
     appTitle: PropTypes.string,
-    links: PropTypes.array.isRequired,
-    hiddenOnly: PropTypes.array
+    links: PropTypes.array.isRequired
   }
 
   state = {
@@ -28,12 +27,20 @@ class AppToolbar extends Component {
     this.setState({ openDrawer: !openDrawer })
   }
 
+  componentWillReceiveProps(nextProps) {
+    let { width } = nextProps
+
+    if (width = 'lg' || width == 'xl') {
+      this.setState({ openDrawer: false })
+    }
+  }
+
   render() {
-    let { appTitle, links, hiddenOnly } = this.props
+    let { appTitle, links } = this.props
     let { openDrawer } = this.state
 
     return (
-      <Hidden only={ hiddenOnly }>
+      <Hidden mdUp>
         <AppBar>
           <Toolbar disableGutters={!open}>
             <IconButton
@@ -57,4 +64,4 @@ class AppToolbar extends Component {
   }
 }
 
-export default AppToolbar
+export default withWidth()(AppToolbar)
