@@ -85,7 +85,7 @@ const _getDocById = (id) => {
 
 const _saveDocById = (id, data, batch) => {
   // Assumption: id will never change from the orignal one, no worry about id conflict
-  const saveOptions = { merge: true }
+  let saveOptions = { merge: true }
   let docRef = _getDocById(id)
 
   return batch ? batch.set(docRef, data, saveOptions) : docRef.set(data, saveOptions)
@@ -171,41 +171,45 @@ const _getDataListFromSnapshot = (snapshot) => {
 }
 
 const _getSummaryDataFromSnapshot = (snapshot) => {
-  let dataGroups = _getDataGroupsFromSnapshot(snapshot)
   let summaryList = []
   let unknownProjectSummary = null
   let overallTotalItems = 0
   let overallStats = null
 
-  Object.entries(dataGroups).forEach(([ projectName, items ]) => {
-    let totalItems = items.length
-    let groupStats = _calculateGroupStats(items)
-    let summary = {
-      projectName,
-      totalItems,
-      priceSummary: {
-        min: groupStats.minPrice,
-        max: groupStats.maxPrice,
-        avg: groupStats.sumPrice / totalItems
-      },
-      ppsSummary: {
-        min: groupStats.minPps,
-        max: groupStats.maxPps,
-        avg: groupStats.sumPps / totalItems
+  let dataGroups = _getDataGroupsFromSnapshot(snapshot)
+  let dataGroupEntries = Object.entries(dataGroups)
+
+  if (dataGroupEntries.length) {
+    dataGroupEntries.forEach(([ projectName, items ]) => {
+      let totalItems = items.length
+      let groupStats = _calculateGroupStats(items)
+      let summary = {
+        projectName,
+        totalItems,
+        priceSummary: {
+          min: groupStats.minPrice,
+          max: groupStats.maxPrice,
+          avg: groupStats.sumPrice / totalItems
+        },
+        ppsSummary: {
+          min: groupStats.minPps,
+          max: groupStats.maxPps,
+          avg: groupStats.sumPps / totalItems
+        }
       }
-    }
 
-    if (projectName) {
-      summaryList.push(summary)
-    }
-    else {
-      unknownProjectSummary = summary
-    }
+      if (projectName) {
+        summaryList.push(summary)
+      }
+      else {
+        unknownProjectSummary = summary
+      }
 
-    // Calculate overall
-    overallTotalItems += totalItems
-    overallStats = _calculateNewStats(overallStats, groupStats)
-  })
+      // Calculate overall
+      overallTotalItems += totalItems
+      overallStats = _calculateNewStats(overallStats, groupStats)
+    })
+  }
 
   if (unknownProjectSummary) {
     summaryList.push(unknownProjectSummary)
@@ -213,12 +217,12 @@ const _getSummaryDataFromSnapshot = (snapshot) => {
 
   let overallSummary = {
     totalItems: overallTotalItems,
-    priceSummary: {
+    priceSummary: overallStats && {
       min: overallStats.minPrice,
       max: overallStats.maxPrice,
       avg: overallStats.sumPrice / overallTotalItems
     },
-    ppsSummary: {
+    ppsSummary: overallStats && {
       min: overallStats.minPps,
       max: overallStats.maxPps,
       avg: overallStats.sumPps / overallTotalItems
