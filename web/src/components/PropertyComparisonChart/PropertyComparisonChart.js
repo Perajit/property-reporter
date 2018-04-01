@@ -16,7 +16,9 @@ const PropertyComparisonChart = (props) => {
     data,
     width,
     height,
-    barHeight
+    barHeight,
+    showVertialGrid,
+    showHorizontalGrid
   } = props
 
   let { barSeries } = mapDataToChartComponents(data, colors)
@@ -29,8 +31,8 @@ const PropertyComparisonChart = (props) => {
       margin={ { left: 0, bottom: 24 } }
       className="property-comparision-chart"
     >
-      <VerticalGridLines />
-      <HorizontalGridLines />
+      { showVertialGrid ? <VerticalGridLines /> : null }
+      { showHorizontalGrid ? <HorizontalGridLines /> : null }
       { barSeries }
       <XAxis tickFormat={ formatSiPrefix } />
       <YAxis />
@@ -43,13 +45,17 @@ PropertyComparisonChart.propTypes = {
   data: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number,
-  barHeight: PropTypes.number
+  barHeight: PropTypes.number,
+  showVertialGrid: PropTypes.bool.isRequired,
+  showHorizontalGrid: PropTypes.bool.isRequired
 }
 
 PropertyComparisonChart.defaultProps = {
   colors: [],
   width: 400,
-  barHeight: 35
+  barHeight: 35,
+  showVertialGrid: false,
+  showHorizontalGrid: false
 }
 
 const mapDataToChartComponents = (data, colors) => {
