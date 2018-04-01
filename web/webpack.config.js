@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
@@ -29,17 +30,21 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Property Reporter',
       template: './src/template.html'
-    })
+    }),
+    new CopyWebpackPlugin([
+      'assets/*'
+    ])
   ],
   resolve: {
     alias: {
-      actions: path.resolve(__dirname, 'src/_actions'),
-      constants: path.resolve(__dirname, 'src/_constants'),
-      components: path.resolve(__dirname, 'src/_components'),
-      helpers: path.resolve(__dirname, 'src/_helpers'),
-      reducers: path.resolve(__dirname, 'src/_reducers'),
-      services: path.resolve(__dirname, 'src/_services'),
-      node_modules: path.resolve(__dirname, 'node_modules')
+      node_modules: path.resolve(__dirname, 'node_modules'),
+      actions: path.resolve(__dirname, 'src/actions'),
+      components: path.resolve(__dirname, 'src/components'),
+      constants: path.resolve(__dirname, 'src/constants'),
+      helpers: path.resolve(__dirname, 'src/helpers'),
+      reducers: path.resolve(__dirname, 'src/reducers'),
+      services: path.resolve(__dirname, 'src/services'),
+      containers: path.resolve(__dirname, 'src/containers')
     }
   },
   devServer: {
