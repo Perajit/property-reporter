@@ -25,9 +25,9 @@ const columnConfigs = [
   { id: 'size', label: 'Size (Sqm)', formatter: numberFormatter, width: '80px' },
   { id: 'price', label: 'Price (Baht)', formatter: numberFormatter, formula: (dataItem) => dataItem.price },
   { id: 'pps', label: 'Price / Sqm (Baht)', formatter: numberFormatter, formula: (dataItem) => dataItem.price / dataItem.size },
-  { id: 'bedrooms', label: 'Bedrooms', formatter: numberFormatter, padding: 'none', width: '80px' },
-  { id: 'bathrooms', label: 'Bathrooms', formatter: numberFormatter, padding: 'none', width: '80px' },
-  { id: 'lastUpdatedTime', label: 'Last Updated', formatter: dateFormatter, padding: 'none', width: '120px' },
+  { id: 'bedrooms', label: 'Bedrooms', formatter: numberFormatter, padding: 'none', width: '80px', hidden: { mdDown: true } },
+  { id: 'bathrooms', label: 'Bathrooms', formatter: numberFormatter, padding: 'none', width: '80px', hidden: { mdDown: true } },
+  { id: 'lastUpdatedTime', label: 'Last Updated', formatter: dateFormatter, padding: 'none', width: '120px', hidden: { smDown: true } },
   { id: 'detailUrl', formatter: linkFormatter, padding: 'none', width: '40px' }
 ]
 

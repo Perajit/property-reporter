@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { TableBody, TableRow } from 'material-ui/Table'
 import Checkbox from 'material-ui/Checkbox'
+import Hidden from 'material-ui/Hidden'
+import { TableBody, TableRow } from 'material-ui/Table'
 
 const EnhancedTableBody = (props) => {
   let {
@@ -66,26 +67,56 @@ const mapColumnConfigsToCells = (CustomTableCell, columnConfigs = [], dataItem =
         numeric,
         width,
         padding,
-        style
+        style,
+        hidden
       } = columnConfig
 
       let value = typeof formula === 'function' ? formula(dataItem) : dataItem[id]
 
+      // cells.push((
+      // <Hidden { ...hidden }>
+      //   <CustomTableCell
+      //     key={ id }
+      //     numeric={ numeric }
+      //     width={ width }
+      //     padding={ padding }
+      //     style={ style }
+      //   >
+      //     { typeof formatter === 'function' ? formatter(value) : value }
+      //   </CustomTableCell>
+      // </Hidden>
+      // ))
+      
       cells.push((
-        <CustomTableCell
-          key={ id }
-          numeric={ numeric }
-          width={ width }
-          padding={ padding }
-          style={ style }
-        >
-          { typeof formatter === 'function' ? formatter(value) : value }
-        </CustomTableCell>
+        createConditionalColumnCell(id, (
+          <CustomTableCell
+            key={ id }
+            numeric={ numeric }
+            width={ width }
+            padding={ padding }
+            style={ style }
+          >
+            { typeof formatter === 'function' ? formatter(value) : value }
+          </CustomTableCell>
+        ), hidden)
       ))
+      
     }
 
     return cells
   }, [])
+}
+
+const createConditionalColumnCell = (key, columnCell, hidden) => {
+  if (!hidden) {
+    return columnCell
+  }
+
+  return (
+    <Hidden { ...hidden } key={ key }>
+      { columnCell }
+    </Hidden>
+  )
 }
 
 export default EnhancedTableBody

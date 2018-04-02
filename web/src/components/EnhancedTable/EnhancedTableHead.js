@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { TableHead, TableRow } from 'material-ui/Table'
 import Checkbox from 'material-ui/Checkbox'
+import Hidden from 'material-ui/Hidden'
+import { TableHead, TableRow } from 'material-ui/Table'
 
 const EnhancedTableHead = (props) => {
   let {
@@ -57,26 +58,41 @@ const mapColumnConfigsToRows = (CustomTableCell, columnConfigs = []) => {
       rowIndex,
       width,
       padding,
-      style
+      style,
+      hidden
     } = columnConfig
 
     rowIndex = rowIndex || 0
     rows[rowIndex] = rows[rowIndex] || []
     rows[rowIndex].push((
-      <CustomTableCell
-        key={ id }
-        colSpan={ colSpan || 1 }
-        rowSpan={ rowSpan || 1 }
-        width={ width }
-        padding={ padding }
-        style={ style }
-      >
-        { label }
-      </CustomTableCell>
+      createConditionalColumnCell(id, (
+        <CustomTableCell
+          key={ id }
+          colSpan={ colSpan || 1 }
+          rowSpan={ rowSpan || 1 }
+          width={ width }
+          padding={ padding }
+          style={ style }
+        >
+          { label }
+        </CustomTableCell>
+      ), hidden)
     ))
 
     return rows
   }, [])
+}
+
+const createConditionalColumnCell = (key, columnCell, hidden) => {
+  if (!hidden) {
+    return columnCell
+  }
+
+  return (
+    <Hidden { ...hidden } key={ key }>
+      { columnCell }
+    </Hidden>
+  )
 }
 
 export default EnhancedTableHead
