@@ -1,9 +1,10 @@
 import { createMuiTheme } from 'material-ui/styles'
 
-export const createSidebarTheme = () => {
-  return createMuiTheme({
-    palette: {
-      type: 'dark'
+export const createNavListStyles = () => {
+  return (theme) => ({
+    activeMenuItem: {
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.text.primary
     }
   })
 }
@@ -15,6 +16,14 @@ export const createSidebarStyles = () => {
     },
     menuTitle: {
       textTransform: 'uppercase'
+    }
+  })
+}
+
+export const createSidebarTheme = () => {
+  return createMuiTheme({
+    palette: {
+      type: 'dark'
     }
   })
 }

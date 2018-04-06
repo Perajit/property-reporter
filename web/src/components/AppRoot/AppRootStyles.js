@@ -1,5 +1,5 @@
 import { createMuiTheme } from 'material-ui/styles'
-import pink from 'material-ui/colors/pink'
+import bluegrey from 'material-ui/colors/bluegrey'
 import teal from 'material-ui/colors/teal'
 
 export const createRootTheme = () => {
@@ -12,6 +12,11 @@ export const createRootTheme = () => {
 
   return createMuiTheme({
     palette: {
+      background: {
+        main: bluegrey[400],
+        light: bluegrey[50],
+        dark: bluegrey[800]
+      },
       primary: teal
     },
     typography: {

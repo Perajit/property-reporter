@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
+// import classNames from 'classnames'
 import { compose } from 'recompose'
 import { withRouter } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
@@ -16,7 +16,6 @@ const NavList = (props) => {
       {
         links.map((link, i) => {
           let { href, label } = link
-          let className = classNames({ [classes.activeMenuItem]: href === location.pathname })
 
           return (
             <ListItem
@@ -24,9 +23,9 @@ const NavList = (props) => {
               button
               component="a"
               href={ href }
-              className={ className }
+              className={ href === location.pathname ? classes.activeMenuItem : classes.menuItem }
             >
-              <Typography className={ classes.activeMenuItemText }>{ label }</Typography>
+              <Typography className={ classes.menuItemText }>{ label }</Typography>
             </ListItem>
           )
         })

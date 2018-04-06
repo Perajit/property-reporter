@@ -1,22 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
-import List, { ListItem, ListItemText } from 'material-ui/List'
+import List, { ListItem } from 'material-ui/List'
 import Divider from 'material-ui/Divider'
 import Avatar from 'material-ui/Avatar'
 import Typography from 'material-ui/Typography'
-import NavList from 'components/NavList'
-import { createSidebarTheme, createSidebarStyles } from './AppSidebarStyles'
+import AppSidebarNavList from './AppSidebarNavList'
+import { createSidebarStyles } from './AppSidebarStyles'
 
 const appIconSrc = '/assets/icon.png' // FIXME: Extract as a constant
-
-const StyledNavList = withStyles((theme) => ({
-  activeMenuItem: {
-    backgroundColor: theme.palette.secondary.main,
-    color: 'inherit'
-  }
-}))(NavList)
 
 const AppSidebar = (props) => {
   let { classes, appTitle, links } = props
@@ -30,7 +22,7 @@ const AppSidebar = (props) => {
         </ListItem>
       </List>
       <Divider />
-      <StyledNavList links={ links } />
+      <AppSidebarNavList links={ links } />
     </div>
   )
 }
