@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import Tooltip from 'material-ui/Tooltip'
@@ -22,9 +22,9 @@ const linkFormatter = (value) => (
 
 const columnConfigs = [
   { id: 'projectName', label: 'Project Name', formatter: textFormatter },
-  { id: 'size', label: 'Size (Sqm)', formatter: numberFormatter, width: '80px' },
+  { id: 'size', label: 'Size (Sq.m)', formatter: numberFormatter, width: '80px', hidden: { smDown: true } },
   { id: 'price', label: 'Price (Baht)', formatter: numberFormatter, formula: (dataItem) => dataItem.price },
-  { id: 'pps', label: 'Price / Sqm (Baht)', formatter: numberFormatter, formula: (dataItem) => dataItem.price / dataItem.size },
+  { id: 'pps', label: 'Price / Sq m (Baht)', formatter: numberFormatter, formula: (dataItem) => dataItem.price / dataItem.size },
   { id: 'bedrooms', label: 'Bedrooms', formatter: numberFormatter, padding: 'none', width: '80px', hidden: { mdDown: true } },
   { id: 'bathrooms', label: 'Bathrooms', formatter: numberFormatter, padding: 'none', width: '80px', hidden: { mdDown: true } },
   { id: 'lastUpdatedTime', label: 'Last Updated', formatter: dateFormatter, padding: 'none', width: '120px', hidden: { smDown: true } },

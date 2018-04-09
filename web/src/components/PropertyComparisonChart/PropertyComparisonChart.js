@@ -10,6 +10,33 @@ import {
 } from 'react-vis'
 import { formatSiPrefix } from 'helpers/format'
 
+const mapDataToChartComponents = (data, colors) => {
+  let BarSeries = HorizontalBarSeries
+  let legends = []
+  let barSeries = []
+
+  Object.entries(data).forEach(([ key, list ], i) => {
+    legends.push(key)
+    barSeries = barSeries.concat(
+      <BarSeries
+        key={ key }
+        data={ list }
+        color={ colors[i] }
+      />
+    )
+  })
+
+  return { legends, barSeries }
+}
+
+const calculateChartHeight = (data, barHeight) => {
+  let lists = Object.values(data)
+  let totalGroups = lists[0].length 
+  let barsPerGroup = lists.length
+
+  return totalGroups * barsPerGroup * barHeight + 20
+}
+
 const PropertyComparisonChart = (props) => {
   let {
     colors,
@@ -56,33 +83,6 @@ PropertyComparisonChart.defaultProps = {
   barHeight: 35,
   showVertialGrid: false,
   showHorizontalGrid: false
-}
-
-const mapDataToChartComponents = (data, colors) => {
-  let BarSeries = HorizontalBarSeries
-  let legends = []
-  let barSeries = []
-
-  Object.entries(data).forEach(([ key, list ], i) => {
-    legends.push(key)
-    barSeries = barSeries.concat(
-      <BarSeries
-        key={ key }
-        data={ list }
-        color={ colors[i] }
-      />
-    )
-  })
-
-  return { legends, barSeries }
-}
-
-const calculateChartHeight = (data, barHeight) => {
-  let lists = Object.values(data)
-  let totalGroups = lists[0].length 
-  let barsPerGroup = lists.length
-
-  return totalGroups * barsPerGroup * barHeight + 20
 }
 
 export default PropertyComparisonChart

@@ -31,7 +31,11 @@ class PropertyList extends Component {
 
   render() {
     const { data } = this.props
-    const { filterKeyword, selectedRows } = this.state
+    
+    const {
+      filterKeyword,
+      selectedRows
+    } = this.state
 
     return (
       <div>

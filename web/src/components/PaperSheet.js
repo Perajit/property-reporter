@@ -7,8 +7,14 @@ import Typography from 'material-ui/Typography'
 const styles = (theme) => ({
   root: theme.mixins.gutters({
     marginTop: theme.spacing.unit * 2,
-    padding: theme.spacing.unit
-  })
+    padding: theme.spacing.unit * 2,
+    [theme.breakpoints.only('xs')]: {
+      marginTop: theme.spacing.unit
+    }
+  }),
+  title: {
+    fontSize: '1.3rem'
+  }
 })
 
 const PaperSheet = (props) => {
@@ -16,7 +22,7 @@ const PaperSheet = (props) => {
 
   return (
     <div>
-      <Typography variant="headline" component="h3" gutterBottom>
+      <Typography variant="headline" component="h3" className={ classes.title } gutterBottom>
         { title }
       </Typography>
       <Paper elevation={ 0 } className={ classes.root }>

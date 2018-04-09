@@ -7,7 +7,10 @@ import AppLayout from './AppLayout'
 const appTitle = 'Property Reporter' // FIXME: Extract to constant
 
 const AppRoot = (props) => {
-  let { links, navs } = props
+  let {
+    links,
+    navs
+  } = props
 
   return (
     <MuiThemeProvider theme={ createRootTheme() }>

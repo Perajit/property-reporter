@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import withWidth from 'material-ui/utils/withWidth'
+import classNames from 'classnames'
+import { withStyles } from 'material-ui/styles'
 import Hidden from 'material-ui/Hidden'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
@@ -8,60 +9,69 @@ import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui-icons/Menu'
 import Typography from 'material-ui/Typography'
 import AppToolbarDrawer from './AppToolbarDrawer'
-import NavList from 'components/NavList'
+import { createToolbarStyles } from './AppToolbarStyles'
 
-class AppToolbar extends Component {
-  static propTypes = {
-    width: PropTypes.string.isRequired,
-    appTitle: PropTypes.string,
-    links: PropTypes.array.isRequired
-  }
+const AppToolbar = (props) => {
+  let {
+    classes,
+    appTitle,
+    links,
+    shift,
+    openDrawer,
+    drawerAnchor,
+    drawerContent,
+    onDrawerToggle
+  } = props
 
-  state = {
-    openDrawer: false
-  }
+  let rootClassName = classNames(classes.root, {
+    [classes.rootClose]: !openDrawer
+  })
 
-  handleDrawerToggle = () => {
-    let { openDrawer } = this.state
+  let appBarlassName = classNames(classes.appBar, {
+    [classes.appBarShift]: shift,
+    [classes[`appBarShift_${drawerAnchor}`]]: shift
+  })
 
-    this.setState({ openDrawer: !openDrawer })
-  }
-
-  componentWillReceiveProps(nextProps) {
-    let { width } = nextProps
-
-    if (width = 'lg' || width == 'xl') {
-      this.setState({ openDrawer: false })
-    }
-  }
-
-  render() {
-    let { appTitle, links } = this.props
-    let { openDrawer } = this.state
-
-    return (
+  return (
+    <div className={ rootClassName }>
       <Hidden mdUp>
-        <AppBar>
-          <Toolbar disableGutters={!open}>
+        <AppBar className={ appBarlassName }>
+          <Toolbar disableGutters={ !open }>
             <IconButton
               color="inherit"
               aria-label="open drawer"
-              onClick={ this.handleDrawerToggle }
+              onClick={ onDrawerToggle }
             >
               <MenuIcon />
             </IconButton>
             <Typography variant="title" color="inherit" noWrap>{ appTitle }</Typography>
           </Toolbar>
         </AppBar>
-        <AppToolbarDrawer
-          open={ openDrawer }
-          onToggleClick={ this.handleDrawerToggle }
-        >
-          <NavList links={ links } />
-        </AppToolbarDrawer>
       </Hidden>
-    )
-  }
+      <AppToolbarDrawer
+        open={ openDrawer }
+        anchor={ drawerAnchor }
+        onToggleClick={ onDrawerToggle }
+      >
+        { drawerContent }
+      </AppToolbarDrawer>
+    </div>
+  )
 }
 
-export default withWidth()(AppToolbar)
+AppToolbar.propTypes = {
+  classes: PropTypes.object.isRequired,
+  appTitle: PropTypes.string,
+  links: PropTypes.array.isRequired,
+  shift: PropTypes.bool.isRequired,
+  openDrawer: PropTypes.bool.isRequired,
+  drawerAnchor: PropTypes.string.isRequired,
+  drawerContent: PropTypes.object.isRequired,
+  onDrawerToggle: PropTypes.func.isRequired
+}
+
+AppToolbar.defaultProps = {
+  shift: false
+}
+
+export default withStyles(createToolbarStyles())(AppToolbar)

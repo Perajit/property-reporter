@@ -1,34 +1,40 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
+import { withStyles } from 'material-ui/styles'
 import Drawer from 'material-ui/Drawer'
-import IconButton from 'material-ui/IconButton'
-import Divider from 'material-ui/Divider'
-import ChevronLeftIcon from 'material-ui-icons/ChevronLeft'
+import { createDrawerStyles } from './AppToolbarStyles'
 
 const AppToolbarDrawer = (props) => {
-  let { children, open, onToggleClick } = props
+  let {
+    classes,
+    children,
+    anchor,
+    open,
+    onToggleClick
+  } = props
+
+  let drawerClasses = {
+    paper: classNames(classes.drawerPaper, classes[`drawerPaper_${anchor}`])
+  }
 
   return (
     <Drawer
       variant="persistent"
-      anchor="left"
+      anchor={ anchor }
       open={ open }
+      classes={ drawerClasses }
     >
-      <div>
-        <IconButton onClick={ onToggleClick }>
-          <ChevronLeftIcon />
-        </IconButton>
-      </div>
-      <Divider />
       { children }
     </Drawer>
   )
 }
 
 AppToolbarDrawer.propTypes = {
+  classes: PropTypes.object.isRequired,
   children: PropTypes.object,
   open: PropTypes.bool.isRequired,
   onToggleClick: PropTypes.func
 }
 
-export default AppToolbarDrawer
+export default withStyles(createDrawerStyles())(AppToolbarDrawer)

@@ -3,7 +3,7 @@ import bluegrey from 'material-ui/colors/bluegrey'
 import teal from 'material-ui/colors/teal'
 
 export const createRootTheme = () => {
-  let tableStyle = { marginTop: 16, marginBottom: 16 }
+  let tableStyle = { marginTop: 0, marginBottom: 0 }
   let tableRowStyle = { height: 'auto' }
   let tableCellStyle = { fontSize: 'inherit', padding: '8px 24px' }
   let paddingCheckboxStyle = { padding: 0 }

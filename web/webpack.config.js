@@ -47,6 +47,7 @@ module.exports = {
       containers: path.resolve(__dirname, 'src/containers')
     }
   },
+  cache: false,
   devServer: {
     historyApiFallback: true,
     proxy: {

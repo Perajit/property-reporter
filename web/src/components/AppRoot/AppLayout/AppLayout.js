@@ -1,38 +1,89 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
+import { compose } from 'recompose'
 import { withStyles } from 'material-ui/styles'
+import withWidth from 'material-ui/utils/withWidth'
 import Grid from 'material-ui/Grid'
 import Hidden from 'material-ui/Hidden'
 import AppToolbar from '../AppToolbar'
-import AppSidebar from '../AppSidebar'
 import AppMain from '../AppMain'
-import { createLayoutStyles } from './AppLayoutStyles'
+import AppMenu from '../AppMenu'
+import { createLayoutStyles, createMenuTheme } from './AppLayoutStyles'
 
 const title = 'Property Reporter'
+const toolbarConfigs = {
+  xs: { hideAppBar: false, drawerAnchor: 'top' },
+  sm: { hideAppBar: false, drawerAnchor: 'left' },
+  md: { hideAppBar: true, drawerAnchor: 'left' },
+  lg: { hideAppBar: true, drawerAnchor: 'left' },
+  xl: { hideAppBar: true, drawerAnchor: 'left' }
+}
 
-const AppLayout = (props) => {
-  let { classes, appTitle, links, navs } = props
+class AppLayout extends Component {
+  state = {
+    forceOpenDrawer: false
+  }
 
-  return (
-    <div className={ classes.root }>
-      <AppToolbar appTitle={ appTitle } links={ links } />
-      <Grid container alignItems="stretch" spacing={ 0 } className={ classes.body }>
-        <Grid item className={ classes.sidebar }>
-          <AppSidebar appTitle={ appTitle } links={ links } />
-        </Grid>
-        <Grid item className={ classes.main }>
-          <AppMain navs={ navs } />
-        </Grid>
-      </Grid>
-    </div>
-  )
+  handleDrawerToggle = () => {
+    let { forceOpenDrawer } = this.state
+
+    this.setState({ forceOpenDrawer: !forceOpenDrawer })
+  }
+
+  render() {
+    let {
+      classes,
+      width,
+      appTitle,
+      links,
+      navs
+    } = this.props
+
+    let drawerTitleHiddenOnly = Object.entries(toolbarConfigs)
+      .reduce((only, [width, config]) => {
+        let hidden = config.drawerAnchor === 'top'
+        return config.drawerAnchor === 'top' ? only.concat(width) : only
+      }, [])
+
+    let toolbarConfig = toolbarConfigs[width]
+    let openDrawer = this.state.forceOpenDrawer || toolbarConfig.hideAppBar
+    let shift = openDrawer && toolbarConfig.drawerAnchor !== 'top'
+
+    let toolbarProps = Object.assign({}, toolbarConfig, {
+      appTitle,
+      links,
+      shift,
+      openDrawer,
+      drawerContent: (
+        <AppMenu
+          theme={ createMenuTheme() }
+          appTitle={ appTitle }
+          links={ links }
+          titleHidden={ { only: drawerTitleHiddenOnly } }
+        />
+      ),
+      onDrawerToggle: this.handleDrawerToggle
+    })
+
+    return (
+      <div className={ classes.root }>
+        <AppToolbar { ...toolbarProps } />
+        <AppMain navs={ navs } shift={ shift } />
+      </div>
+    )
+  }
 }
 
 AppLayout.propTypes = {
   classes: PropTypes.object.isRequired,
+  width: PropTypes.string.isRequired,
   appTitle: PropTypes.string,
   links: PropTypes.array.isRequired,
   navs: PropTypes.array.isRequired
 }
 
-export default withStyles(createLayoutStyles())(AppLayout)
+export default compose(
+  withStyles(createLayoutStyles()),
+  withWidth()
+)(AppLayout)

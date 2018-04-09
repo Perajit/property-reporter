@@ -4,7 +4,8 @@ export const createNavListStyles = () => {
       color: theme.palette.text.primary
     },
     activeMenuItem: {
-      color: theme.palette.secondary.main
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.text.primary
     },
     menuItemText: {
       color: 'inherit'
