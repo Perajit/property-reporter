@@ -1,5 +1,8 @@
-const sidebarWidth = 250
-const xsAppBarHeight = 56
+import {
+  APP_MENU_WIDTH,
+  APP_BAR_HEIGHT_XS,
+  APP_BAR_HEIGHT_SM
+} from 'constants/configs'
 
 export const createToolbarStyles = () => {
   return (theme) => ({
@@ -18,10 +21,10 @@ export const createToolbarStyles = () => {
       })
     },
     appBarShift: {
-      marginLeft: sidebarWidth
+      marginLeft: APP_MENU_WIDTH
     },
     appBarShift_left: {
-      width: `calc(100% - ${sidebarWidth}px)`
+      width: `calc(100% - ${APP_MENU_WIDTH}px)`
     }
   })
 }
@@ -33,10 +36,10 @@ export const createDrawerStyles = () => {
       backgroundColor: theme.palette.background.dark
     },
     drawerPaper_left: {
-      width: sidebarWidth
+      width: APP_MENU_WIDTH
     },
     drawerPaper_top: {
-      top: xsAppBarHeight,
+      top: APP_BAR_HEIGHT_XS,
       bottom: 0
     }
   })

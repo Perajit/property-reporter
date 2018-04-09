@@ -1,6 +1,8 @@
-const sidebarWidth = 250
-const smAppBarHeight = 65
-const xsAppBarHeight = 56
+import {
+  APP_MENU_WIDTH,
+  APP_BAR_HEIGHT_XS,
+  APP_BAR_HEIGHT_SM
+} from 'constants/configs'
 
 export const createMainStyles = () => {
   return (theme) => ({
@@ -10,17 +12,17 @@ export const createMainStyles = () => {
       width: '100%',
       height: '100%',
       [theme.breakpoints.only('xs')]: {
-        height: `calc(100% - ${xsAppBarHeight}px)`,
-        marginTop: xsAppBarHeight
+        height: `calc(100% - ${APP_BAR_HEIGHT_XS}px)`,
+        marginTop: APP_BAR_HEIGHT_XS
       },
       [theme.breakpoints.only('sm')]: {
-        height: `calc(100% - ${smAppBarHeight}px)`,
-        marginTop: smAppBarHeight
+        height: `calc(100% - ${APP_BAR_HEIGHT_SM}px)`,
+        marginTop: APP_BAR_HEIGHT_SM
       }
     },
     rootShift: {
-      width: `calc(100% - ${sidebarWidth}px)`,
-      marginLeft: sidebarWidth,
+      width: `calc(100% - ${APP_MENU_WIDTH}px)`,
+      marginLeft: APP_MENU_WIDTH,
       transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
