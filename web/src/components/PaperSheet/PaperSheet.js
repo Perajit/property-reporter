@@ -3,22 +3,14 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
-
-const styles = (theme) => ({
-  root: theme.mixins.gutters({
-    marginTop: theme.spacing.unit * 2,
-    padding: theme.spacing.unit * 2,
-    [theme.breakpoints.only('xs')]: {
-      marginTop: theme.spacing.unit
-    }
-  }),
-  title: {
-    fontSize: '1.3rem'
-  }
-})
+import { getSheetStyles } from './PaperSheetStyles'
 
 const PaperSheet = (props) => {
-  const { classes, title, children } = props
+  const {
+    classes,
+    children,
+    title
+  } = props
 
   return (
     <div>
@@ -38,4 +30,4 @@ PaperSheet.propTypes = {
   children: PropTypes.object
 }
 
-export default withStyles(styles)(PaperSheet)
+export default withStyles(getSheetStyles())(PaperSheet)

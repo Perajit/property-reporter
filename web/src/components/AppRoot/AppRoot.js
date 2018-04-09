@@ -4,7 +4,7 @@ import { MuiThemeProvider } from 'material-ui/styles'
 import { createRootTheme } from './AppRootStyles'
 import AppLayout from './AppLayout'
 
-const appTitle = 'Property Reporter' // FIXME: Extract to constant
+import { APP_TITLE } from 'constants/labels'
 
 const AppRoot = (props) => {
   let {
@@ -15,7 +15,7 @@ const AppRoot = (props) => {
   return (
     <MuiThemeProvider theme={ createRootTheme() }>
       <AppLayout
-        appTitle={ appTitle }
+        appTitle={ APP_TITLE }
         { ...props }
       />
     </MuiThemeProvider>

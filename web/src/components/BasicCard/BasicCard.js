@@ -3,19 +3,14 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Card, { CardContent } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
-import grey from 'material-ui/colors/grey'
+import { getCardStyles } from './BasicCardStyles'
 
-const styles = (theme) => ({
-  title: {
-    borderBottom: `solid 1px ${theme.palette.divider}`,
-    margingBottom: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    color: theme.palette.secondary.light
-  }
-})
-
-const EnhancedCard = (props) => {
-  const { classes, title, children } = props
+const BasicCard = (props) => {
+  const {
+    classes,
+    children,
+    title
+  } = props
 
   return (
     <Card>
@@ -29,10 +24,10 @@ const EnhancedCard = (props) => {
   )
 }
 
-EnhancedCard.propTypes = {
+BasicCard.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string,
   children: PropTypes.object
 }
 
-export default withStyles(styles)(EnhancedCard)
+export default withStyles(getCardStyles())(BasicCard)

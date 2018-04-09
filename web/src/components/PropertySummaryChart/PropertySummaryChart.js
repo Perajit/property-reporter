@@ -1,22 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import PropertyComparisonChart from 'components/PropertyComparisonChart'
-
-const mapListToChartSeries = (list, fieldHierarchy) => {
-  return list.map((item) => (
-    { y: item.projectName, x: extractValue(item, fieldHierarchy) }
-  ))
-}
-
-const extractValue = (obj, fieldHierarchy) => {
-  let value = obj
-
-  fieldHierarchy.forEach((field) => {
-    value = value[field]
-  })
-
-  return value
-}
+import { mapListToChartSeries } from './PropertySummaryChartHelper'
 
 const PropertySummaryChart = (props) => {
   const {

@@ -9,7 +9,7 @@ import Typography from 'material-ui/Typography'
 import NavList from 'components/NavList'
 import { createMenuStyles } from './AppMenuStyles'
 
-const appIconSrc = '/assets/icon.png' // FIXME: Extract as a constant
+import { APP_ICON } from 'constants/assets'
 
 const AppMenu = (props) => {
   let {
@@ -24,7 +24,7 @@ const AppMenu = (props) => {
       <Hidden { ...titleHidden }>
         <List>
           <ListItem>
-            <Avatar alt="" src={ appIconSrc } className={ classes.icon } />
+            <Avatar alt="" src={ APP_ICON } className={ classes.icon } />
             <Typography variant="title" className={ classes.menuTitle }>{ appTitle }</Typography>
           </ListItem>
         </List>

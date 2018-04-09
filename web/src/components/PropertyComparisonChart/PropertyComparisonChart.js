@@ -5,37 +5,10 @@ import {
   XAxis,
   YAxis,
   VerticalGridLines,
-  HorizontalGridLines,
-  HorizontalBarSeries
+  HorizontalGridLines
 } from 'react-vis'
 import { formatSiPrefix } from 'helpers/format'
-
-const mapDataToChartComponents = (data, colors) => {
-  let BarSeries = HorizontalBarSeries
-  let legends = []
-  let barSeries = []
-
-  Object.entries(data).forEach(([ key, list ], i) => {
-    legends.push(key)
-    barSeries = barSeries.concat(
-      <BarSeries
-        key={ key }
-        data={ list }
-        color={ colors[i] }
-      />
-    )
-  })
-
-  return { legends, barSeries }
-}
-
-const calculateChartHeight = (data, barHeight) => {
-  let lists = Object.values(data)
-  let totalGroups = lists[0].length 
-  let barsPerGroup = lists.length
-
-  return totalGroups * barsPerGroup * barHeight + 20
-}
+import { mapDataToChartComponents, calculateChartHeight } from './PropertyComparisonChartHelper'
 
 const PropertyComparisonChart = (props) => {
   let {

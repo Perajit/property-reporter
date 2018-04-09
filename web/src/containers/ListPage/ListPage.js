@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import PaperSheet from 'components/PaperSheet'
 import PropertyList from 'components/PropertyList'
 
-const title = 'Property List'
+import { LIST_PAGE_TITLE } from 'constants/labels'
 
 const ListPage = (props) => {
   let { properties, onDeleteProperties } = props
 
   return (
-    <PaperSheet title={ title }>
+    <PaperSheet title={ LIST_PAGE_TITLE }>
       <PropertyList
         data={ properties }
         onDeleteProperties={ onDeleteProperties }

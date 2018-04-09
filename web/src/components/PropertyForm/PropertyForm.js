@@ -2,27 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
-import { InputAdornment } from 'material-ui/Input'
-import Typography from 'material-ui/Typography'
 import TextField from 'material-ui/TextField'
-import MenuItem from 'material-ui/Menu/MenuItem'
-
-const styles = (theme) => ({
-  root: {
-    margin: theme.spacing.unit
-  }
-})
+import { mapOptionToSelectItem } from './PropertyFormHelper'
+import { getFormStyles } from './PropertyFormStyles'
 
 const itemTypeOptions = [
   { label: 'Sale', value: 'sale' }
 ]
+
 const pTypeOptions = [
   { label: 'Condo', value: 'condo' }
 ]
-
-const mapOptionToSelectItem = ({ label, value }) => (
-  <MenuItem key={ value } value={ value }>{ label }</MenuItem>
-)
 
 const PropertyForm = (props) => {
   let { classes } = props
@@ -74,4 +64,4 @@ PropertyForm.propTypes = {
   onSubmit: PropTypes.func.isRequired
 }
 
-export default withStyles(styles)(PropertyForm)
+export default withStyles(getFormStyles())(PropertyForm)

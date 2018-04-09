@@ -4,10 +4,10 @@ import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
 import amber from 'material-ui/colors/amber'
 import green from 'material-ui/colors/green'
-import EnhancedCard from 'components/EnhancedCard'
+import BasicCard from 'components/BasicCard'
 import PropertySummaryChart from 'components/PropertySummaryChart'
 
-const title = 'Dashboard'
+import { DASHBOARD_PAGE_TITLE } from 'constants/labels'
 
 const DashboardPage = (props) => {
   let { propertySummary } = props
@@ -15,28 +15,28 @@ const DashboardPage = (props) => {
   return (
     <div>
       <Typography variant="headline" component="h3" gutterBottom>
-        { title }
+        { DASHBOARD_PAGE_TITLE }
       </Typography>
       <Grid container justify="flex-start" alignItems="stretch">
         <Grid item>
-          <EnhancedCard title="Average Price">
+          <BasicCard title="Average Price">
             <PropertySummaryChart data={ propertySummary } field="priceSummary/avg"
               title="Average Price"
               colors={ [
                 amber['A200']
               ] }
             />
-          </EnhancedCard>
+          </BasicCard>
         </Grid>
         <Grid item>
-          <EnhancedCard title="Average Price / Size">
+          <BasicCard title="Average Price / Size">
             <PropertySummaryChart data={ propertySummary } field="ppsSummary/avg"
               title="Average Price / Size"
               colors={ [
                 green['A200']
               ] }
             />
-          </EnhancedCard>
+          </BasicCard>
         </Grid>
       </Grid>
     </div>

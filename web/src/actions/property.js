@@ -1,3 +1,5 @@
+import { propertyService } from 'services'
+
 import {
   GET_PROPERTIES_REQUEST,
   GET_PROPERTIES_SUCCESS,
@@ -15,8 +17,6 @@ import {
   DELETE_PROPERTIES_SUCCESS,
   DELETE_PROPERTIES_FAILURE
 } from 'constants/actionTypes'
-
-import { propertyService } from 'services'
 
 const createActions = (actionCreators, serviceFunction, ...payloads) => {
   const {
