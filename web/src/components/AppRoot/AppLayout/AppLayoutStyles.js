@@ -11,11 +11,3 @@ export const createLayoutStyles = () => {
     }
   }
 }
-
-export const createMenuTheme = () => {
-  return createMuiTheme({
-    palette: {
-      type: 'dark'
-    }
-  })
-}

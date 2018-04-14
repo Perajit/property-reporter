@@ -8,6 +8,7 @@ const EnhancedTableBody = (props) => {
   let {
     columnConfigs,
     data,
+    hover,
     selectable,
     selectedRows,
     onCheckboxChange,
@@ -24,6 +25,7 @@ const EnhancedTableBody = (props) => {
           return (
             <TableRow
               key={ rowId }
+              hover={ hover }
               selected={ isSelected }
             >
               {
@@ -38,7 +40,7 @@ const EnhancedTableBody = (props) => {
                   </CustomTableCell>
                 ) : null
               }
-              { mapColumnConfigsToCells(CustomTableCell, columnConfigs, dataItem) }
+              { createCells(rowId, CustomTableCell, columnConfigs, dataItem) }
             </TableRow>
           )
         })
@@ -50,13 +52,14 @@ const EnhancedTableBody = (props) => {
 EnhancedTableBody.propTypes = {
   columnConfigs: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
+  hover: PropTypes.bool,
   selectable: PropTypes.bool.isRequired,
   selectedRows: PropTypes.array,
   onCheckboxChange: PropTypes.func,
   CustomTableCell: PropTypes.func
 }
 
-const mapColumnConfigsToCells = (CustomTableCell, columnConfigs = [], dataItem = {}) => {
+const createCells = (rowId, CustomTableCell, columnConfigs = [], dataItem = {}) => {
   return columnConfigs.reduce((cells, columnConfig) => {
     // Skip adding content if column is a group header
     if (!columnConfig.isHeader) {
@@ -73,20 +76,6 @@ const mapColumnConfigsToCells = (CustomTableCell, columnConfigs = [], dataItem =
 
       let value = typeof formula === 'function' ? formula(dataItem) : dataItem[id]
 
-      // cells.push((
-      // <Hidden { ...hidden }>
-      //   <CustomTableCell
-      //     key={ id }
-      //     numeric={ numeric }
-      //     width={ width }
-      //     padding={ padding }
-      //     style={ style }
-      //   >
-      //     { typeof formatter === 'function' ? formatter(value) : value }
-      //   </CustomTableCell>
-      // </Hidden>
-      // ))
-      
       cells.push((
         createConditionalColumnCell(id, (
           <CustomTableCell

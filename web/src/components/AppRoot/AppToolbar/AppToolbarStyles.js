@@ -25,6 +25,9 @@ export const createToolbarStyles = () => {
     },
     appBarShift_left: {
       width: `calc(100% - ${APP_MENU_WIDTH}px)`
+    },
+    menuIcon: {
+      marginRight: theme.spacing.unit * 2
     }
   })
 }

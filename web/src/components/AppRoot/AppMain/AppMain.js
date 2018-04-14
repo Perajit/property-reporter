@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Route } from 'react-router-dom'
+import { Route, Redirect, Switch } from 'react-router-dom'
 import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 import { createMainStyles } from './AppMainStyles'
@@ -8,7 +8,7 @@ import { createMainStyles } from './AppMainStyles'
 const AppMain = (props) => {
   let {
     classes,
-    navs,
+    routes,
     shift
   } = props
   
@@ -19,11 +19,17 @@ const AppMain = (props) => {
   return (
     <div className={ rootClassName }>
       <div className={ classes.content }>
-      {
-        navs.map((nav, i) => (
-          <Route exact path={ nav.href } component={ nav.component } key={ i } />
-        ))
-      }
+        <Switch>
+          {
+            routes.map((route, i) => (
+              <Route
+                key={ i }
+                { ...route }
+              />
+            ))
+          }
+          <Redirect from="/" to={ routes[0].path } />
+        </Switch>
       </div>
     </div>
   )
@@ -31,7 +37,7 @@ const AppMain = (props) => {
 
 AppMain.propTypes = {
   classes: PropTypes.object.isRequired,
-  navs: PropTypes.array.isRequired,
+  routes: PropTypes.array.isRequired,
   shift: PropTypes.bool.isRequired
 }
 

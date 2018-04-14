@@ -37,7 +37,7 @@ class AppLayout extends Component {
       width,
       appTitle,
       links,
-      navs
+      routes
     } = this.props
 
     let drawerTitleHiddenOnly = Object.entries(toolbarConfigs)
@@ -57,7 +57,6 @@ class AppLayout extends Component {
       openDrawer,
       drawerContent: (
         <AppMenu
-          theme={ createMenuTheme() }
           appTitle={ appTitle }
           links={ links }
           titleHidden={ { only: drawerTitleHiddenOnly } }
@@ -69,7 +68,7 @@ class AppLayout extends Component {
     return (
       <div className={ classes.root }>
         <AppToolbar { ...toolbarProps } />
-        <AppMain navs={ navs } shift={ shift } />
+        <AppMain routes={ routes } shift={ shift } />
       </div>
     )
   }
@@ -80,7 +79,7 @@ AppLayout.propTypes = {
   width: PropTypes.string.isRequired,
   appTitle: PropTypes.string,
   links: PropTypes.array.isRequired,
-  navs: PropTypes.array.isRequired
+  routes: PropTypes.array.isRequired
 }
 
 export default compose(

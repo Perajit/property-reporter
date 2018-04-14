@@ -5,16 +5,14 @@ import SearchIcon from 'material-ui-icons/Search'
 
 const SearchInput = (props) => {
   const {
-    id,
-    placeholder,
-    onKeywordChange
+    onKeywordChange,
+    ...inputProps
   } = props
 
   return (
     <Input
-      id={ id }
+      { ...inputProps }
       type="search"
-      placeholder={ placeholder }
       startAdornment={ (
         <InputAdornment position="start">
           <SearchIcon />

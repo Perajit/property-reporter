@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import Toolbar from 'material-ui/Toolbar'
 import Tooltip from 'material-ui/Tooltip'
 import IconButton from 'material-ui/IconButton'
+import PlaylistAddIcon from 'material-ui-icons/PlaylistAdd'
 import DeleteIcon from 'material-ui-icons/Delete'
+import Hidden from 'material-ui/Hidden'
 import SearchInput from 'components/SearchInput'
 import { createToolbarStyles } from './PropertyListToolbarStyles'
 
@@ -28,18 +31,26 @@ const PropertyListToolbar = (props) => {
       <div className={ classes.stretch }>
         <SearchInput
           placeholder="Search for Properties"
+          className={ classes.searchInput }
           onKeywordChange={ onKeywordChange }
         />
       </div>
-      <div className={ classNames({ [classes.invisible]: !selectedRows.length }) }>
-        <Tooltip title="Delete">
+      <div>
+        <IconButton
+          aria-label="Delete"
+          className={ classNames(classes.iconButton, { [classes.invisible]: !selectedRows.length }) }
+          onClick={ handleDeleteButtonClick }
+        >
+          <DeleteIcon />
+        </IconButton>
+        <Link to="/properties/add">
           <IconButton
-            aria-label="Delete"
-            onClick={ handleDeleteButtonClick }
+            aria-label="PlaylistAdd"
+            className={ classes.iconButton }
           >
-            <DeleteIcon />
+            <PlaylistAddIcon />
           </IconButton>
-        </Tooltip>
+        </Link>
       </div>
     </Toolbar>
   )

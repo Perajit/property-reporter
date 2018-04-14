@@ -9,7 +9,7 @@ import { APP_TITLE } from 'constants/labels'
 const AppRoot = (props) => {
   let {
     links,
-    navs
+    routes
   } = props
 
   return (
@@ -24,7 +24,7 @@ const AppRoot = (props) => {
 
 AppRoot.propTypes = {
   links: PropTypes.array.isRequired,
-  navs: PropTypes.array.isRequired
+  routes: PropTypes.array.isRequired
 }
 
 export default AppRoot

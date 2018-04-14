@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { loadPropertySummary } from 'actions/property'
 import SummaryPage from './SummaryPage'
+
+import { loadPropertySummary } from 'actions/property'
 
 class SummaryPageContainer extends Component {
   static propTypes = {
@@ -37,4 +38,7 @@ const mapDispatchToProps = (dispatch) => ({
   onLoadPropertySummary: () => dispatch(loadPropertySummary())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(SummaryPageContainer)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SummaryPageContainer)

@@ -4,28 +4,20 @@ import EnhancedTable from 'components/EnhancedTable'
 import { getColumnConfigs } from './PropertyListTableConfigs'
 
 const PropertyListTable = (props) => {
-  let {
-    data,
-    filter,
-    selectable,
-    onRowSelectionChange
-  } = props
-
   return (
     <EnhancedTable
-      columnConfigs={ getColumnConfigs() }
-      data={ data }
-      filter={ filter }
-      selectable={ selectable }
-      onRowSelectionChange={ onRowSelectionChange }
+      columnConfigs={ getColumnConfigs(props) }
+      { ...props }
     />
   )
 }
 
 PropertyListTable.propTypes = {
   data: PropTypes.array.isRequired,
-  filter: PropTypes.func,
+  hover: PropTypes.bool,
   selectable: PropTypes.bool,
+  customTableStyles: PropTypes.object,
+  customTableCellStyles: PropTypes.object,
   onRowSelectionChange: PropTypes.func
 }
 

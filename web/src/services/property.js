@@ -20,6 +20,9 @@ const getPropertySummary = () => {
 const saveProperty = (property) => {
   let requestOptions = {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify([property])
   }
 

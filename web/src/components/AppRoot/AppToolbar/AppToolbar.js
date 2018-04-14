@@ -41,6 +41,7 @@ const AppToolbar = (props) => {
               color="inherit"
               aria-label="open drawer"
               onClick={ onDrawerToggle }
+              className={ classes.menuIcon }
             >
               <MenuIcon />
             </IconButton>

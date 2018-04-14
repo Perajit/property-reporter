@@ -7,7 +7,7 @@ import green from 'material-ui/colors/green'
 import BasicCard from 'components/BasicCard'
 import PropertySummaryChart from 'components/PropertySummaryChart'
 
-import { DASHBOARD_PAGE_TITLE } from 'constants/labels'
+import { DASHBOARD_TITLE } from 'constants/labels'
 
 const DashboardPage = (props) => {
   let { propertySummary } = props
@@ -15,7 +15,7 @@ const DashboardPage = (props) => {
   return (
     <div>
       <Typography variant="headline" component="h3" gutterBottom>
-        { DASHBOARD_PAGE_TITLE }
+        { DASHBOARD_TITLE }
       </Typography>
       <Grid container justify="flex-start" alignItems="stretch">
         <Grid item>

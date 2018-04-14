@@ -38,6 +38,7 @@ module.exports = {
   resolve: {
     alias: {
       node_modules: path.resolve(__dirname, 'node_modules'),
+      src: path.resolve(__dirname, 'src'),
       actions: path.resolve(__dirname, 'src/actions'),
       components: path.resolve(__dirname, 'src/components'),
       constants: path.resolve(__dirname, 'src/constants'),

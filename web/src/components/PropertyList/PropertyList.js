@@ -18,21 +18,21 @@ class PropertyList extends Component {
     this.setState({ filterKeyword })
   }
 
-  handleRowSelectionChange = (selectedRows) => {
-    this.setState({ selectedRows })
-  }
-
   handleDeleteSelectedRows = () => {
-    const { onDeleteProperties } = this.props
-    const { selectedRows } = this.state
+    let { onDeleteProperties } = this.props
+    let { selectedRows } = this.state
 
     onDeleteProperties(mapSelectedRowsToIds(selectedRows))
   }
 
+  handleRowSelectionChange = (selectedRows) => {
+    this.setState({ selectedRows })
+  }
+
   render() {
-    const { data } = this.props
+    let { data } = this.props
     
-    const {
+    let {
       filterKeyword,
       selectedRows
     } = this.state
@@ -47,6 +47,7 @@ class PropertyList extends Component {
         <PropertyListTable
           data={ data }
           filter={ createFilter(filterKeyword) }
+          hover={ true }
           selectable={ true }
           onRowSelectionChange={ this.handleRowSelectionChange }
         />

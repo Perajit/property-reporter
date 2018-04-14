@@ -9,6 +9,7 @@ class EnhancedTable extends Component {
   static propTypes = {
     columnConfigs: PropTypes.array.isRequired,
     data: PropTypes.array.isRequired,
+    hover: PropTypes.bool,
     selectable: PropTypes.bool.isRequired,
     customTableStyles: PropTypes.object,
     customTableCellStyles: PropTypes.object,
@@ -87,6 +88,7 @@ class EnhancedTable extends Component {
   render() {
     let {
       columnConfigs,
+      hover,
       selectable,
       customTableStyles,
       customTableCellStyles
@@ -112,6 +114,7 @@ class EnhancedTable extends Component {
         <EnhancedTableBody
           columnConfigs={ columnConfigs }
           data={ visibleData }
+          hover={ hover }
           selectable={ selectable }
           selectedRows={ selectedRows }
           onCheckboxChange={ this.handleRowCheckboxChange }

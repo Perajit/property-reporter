@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { loadProperties, deleteProperties } from 'actions/property'
 import ListPage from './ListPage'
+
+import {
+  loadProperties,
+  deleteProperties
+} from 'actions/property'
 
 class ListPageContainer extends Component {
   static propTypes = {
@@ -46,4 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
   onDeleteProperties: (ids) => dispatch(deleteProperties(ids))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListPageContainer)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ListPageContainer)

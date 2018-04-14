@@ -16,11 +16,13 @@ const propertiesReducer = (state = initialState, action) => {
       let index = state.findIndex(item => item.id === savedProperty.id)
 
       return index < 0 ?
-        state.concat(action.savedProperty)
+        state.concat(savedProperty)
         : state.slice(0, index).concat(savedProperty).concat(state.slice(index + 1))
 
     case DELETE_PROPERTIES_SUCCESS:
-      return state.filter((item) => action.deletedProperties.indexOf(item.id) < 0)
+      let { ids } = action
+      
+      return state.filter((item) => ids.indexOf(item.id) < 0)
 
     default:
       return state

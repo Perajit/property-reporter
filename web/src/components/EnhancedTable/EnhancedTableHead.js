@@ -13,7 +13,7 @@ const EnhancedTableHead = (props) => {
     CustomTableCell
   } = props
 
-  let rows = mapColumnConfigsToRows(CustomTableCell, columnConfigs)
+  let rows = createRows(CustomTableCell, columnConfigs)
 
   return (
     <TableHead>
@@ -48,7 +48,7 @@ EnhancedTableHead.propTypes = {
   CustomTableCell: PropTypes.func
 }
 
-const mapColumnConfigsToRows = (CustomTableCell, columnConfigs = []) => {
+const createRows = (CustomTableCell, columnConfigs = []) => {
   return columnConfigs.reduce((rows, columnConfig) => {
     let {
       id,
