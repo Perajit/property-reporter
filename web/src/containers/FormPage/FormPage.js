@@ -1,10 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  withRouter,
-  history,
-  location
-} from 'react-router-dom'
 import PaperSheet from 'components/PaperSheet'
 import PropertyForm from 'components/PropertyForm'
 
@@ -15,8 +10,10 @@ import {
 
 const FormPage = (props) => {
   let {
-    location,
     property,
+    propertyProgress: {
+      isSaving
+    },
     onSubmitForm,
     onCloseForm
   } = props
@@ -27,6 +24,7 @@ const FormPage = (props) => {
     <PaperSheet title={ title }>
       <PropertyForm
         data={ property }
+        isSaving={ isSaving }
         onSubmit={ onSubmitForm }
         onClose={ onCloseForm }
       />
@@ -35,10 +33,10 @@ const FormPage = (props) => {
 }
 
 FormPage.propTypes = {
-  location: PropTypes.object.isRequired,
   property: PropTypes.object,
+  propertyProgress: PropTypes.object,
   onSubmitForm: PropTypes.func.isRequired,
   onCloseForm: PropTypes.func.isRequired
 }
 
-export default withRouter(FormPage)
+export default FormPage

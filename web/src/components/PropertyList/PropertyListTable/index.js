@@ -1,1 +1,1 @@
-export { default } from './PropertyListTable'
+export { default } from './PropertyListTableWrapper'

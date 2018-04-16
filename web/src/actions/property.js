@@ -7,19 +7,19 @@ import {
   GET_PROPERTIES_SUCCESS,
   GET_PROPERTIES_FAILURE,
 
-  GET_PROPERTY_SUMMARY_REQUEST,
-  GET_PROPERTY_SUMMARY_SUCCESS,
-  GET_PROPERTY_SUMMARY_FAILURE,
+  DELETE_PROPERTIES_REQUEST,
+  DELETE_PROPERTIES_SUCCESS,
+  DELETE_PROPERTIES_FAILURE,
+
+  GET_PROPERTY_DETAIL,
 
   SAVE_PROPERTY_REQUEST,
   SAVE_PROPERTY_SUCCESS,
   SAVE_PROPERTY_FAILURE,
 
-  DELETE_PROPERTIES_REQUEST,
-  DELETE_PROPERTIES_SUCCESS,
-  DELETE_PROPERTIES_FAILURE,
-
-  GET_PROPERTY_DETAIL
+  GET_PROPERTY_SUMMARY_REQUEST,
+  GET_PROPERTY_SUMMARY_SUCCESS,
+  GET_PROPERTY_SUMMARY_FAILURE
 } from 'constants/actionTypes'
 
 const createActions = (actionCreators, serviceFunction, ...payloads) => {
@@ -50,14 +50,6 @@ export const loadProperties = () => {
   return createActions({ createRequestAction, createSuccessAction, createFailureAction }, propertyService.getProperties)
 }
 
-export const saveProperty = (data) => {
-  const createRequestAction = (data) => ({ type: SAVE_PROPERTY_REQUEST, data })
-  const createSuccessAction = (savedProperty) => ({ type: SAVE_PROPERTY_SUCCESS, savedProperty })
-  const createFailureAction = (error) => ({ type: SAVE_PROPERTY_FAILURE, error })
-
-  return createActions({ createRequestAction, createSuccessAction, createFailureAction }, propertyService.saveProperty, data)
-}
-
 export const deleteProperties = (ids) => {
   const createRequestAction = (ids) => ({ type: DELETE_PROPERTIES_REQUEST, ids })
   const createSuccessAction = () => ({ type: DELETE_PROPERTIES_SUCCESS, ids })
@@ -73,6 +65,14 @@ export const loadPropertyDetail = (id) => {
   return (dispatch) => {
     dispatch({ type: GET_PROPERTY_DETAIL, property })
   }
+}
+
+export const saveProperty = (data) => {
+  const createRequestAction = (data) => ({ type: SAVE_PROPERTY_REQUEST, data })
+  const createSuccessAction = (savedProperty) => ({ type: SAVE_PROPERTY_SUCCESS, savedProperty })
+  const createFailureAction = (error) => ({ type: SAVE_PROPERTY_FAILURE, error })
+
+  return createActions({ createRequestAction, createSuccessAction, createFailureAction }, propertyService.saveProperty, data)
 }
 
 export const loadPropertySummary = () => {

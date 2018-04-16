@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import FetchableView from 'components/FetchableView'
 import PropertyListToolbar from './PropertyListToolbar'
 import PropertyListTable from './PropertyListTable'
 
@@ -50,15 +49,14 @@ class PropertyList extends Component {
           onKeywordChange={ this.handleKeywordChange }
           onDeleteSelectedRows={ this.handleDeleteSelectedRows }
         />
-        <FetchableView isFetching={ isFetching }>
-          <PropertyListTable
-            data={ data }
-            filter={ createFilter(filterKeyword) }
-            hover={ true }
-            selectable={ true }
-            onRowSelectionChange={ this.handleRowSelectionChange }
-          />
-        </FetchableView>
+        <PropertyListTable
+          data={ data }
+          isFetching={ isFetching }
+          filter={ createFilter(filterKeyword) }
+          hover={ true }
+          selectable={ true }
+          onRowSelectionChange={ this.handleRowSelectionChange }
+        />
       </div>
     )
   }

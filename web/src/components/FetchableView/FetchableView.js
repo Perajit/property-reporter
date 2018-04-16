@@ -9,16 +9,26 @@ const FetchableView = (props) => {
   let {
     classes,
     children,
-    isFetching
+    isFetching,
+    showFetchingOverlay
   } = props
 
+  let childrenContainerClassName = classNames({
+    [classes.invisible]: !showFetchingOverlay && isFetching
+  })
+  
+  let fetchingContainerClassName = classNames(classes.indicator, {
+    [classes.hidden]: !isFetching,
+    [classes.overlay]: showFetchingOverlay
+  })
+
   return (
-    <div>
-      <div className={ classNames(classes.indicator, { [classes.hidden]: !isFetching }) }>
-        <FetchingIndicator isFetching={ isFetching } />
-      </div>
-      <div className={ classNames({ [classes.hidden]: isFetching }) }>
+    <div className={ classes.root }>
+      <div className={ childrenContainerClassName }>
         { children }
+      </div>
+      <div className={ fetchingContainerClassName }>
+        <FetchingIndicator isFetching={ isFetching } />
       </div>
     </div>
   )
@@ -27,7 +37,8 @@ const FetchableView = (props) => {
 FetchableView.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.object.isRequired,
-  isFetching: PropTypes.bool.isRequired
+  isFetching: PropTypes.bool.isRequired,
+  showFetchingOverlay: PropTypes.bool,
 }
 
 FetchableView.defaultProps = {

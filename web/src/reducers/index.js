@@ -3,6 +3,7 @@ import properties from './properties'
 import property from './property'
 import propertySummary from './propertySummary'
 import propertiesProgress from './propertiesProgress'
+import propertyProgress from './propertyProgress'
 import propertySummaryProgress from './propertySummaryProgress'
 
 const rootReducer = combineReducers({
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   property,
   propertySummary,
   propertiesProgress,
+  propertyProgress,
   propertySummaryProgress
 })
 

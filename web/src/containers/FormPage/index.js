@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
-import { withRouter, history, location } from 'react-router-dom'
+import {
+  withRouter,
+  history,
+  location
+} from 'react-router-dom'
 import FormPage from './FormPage'
 
 import {
@@ -13,6 +17,7 @@ import {
 class FormPageContainer extends Component {
   static propTypes = {
     property: PropTypes.object,
+    propertyProgress: PropTypes.object,
     onLoadPropertyDetail: PropTypes.func.isRequired,
     onSaveProperty: PropTypes.func.isRequired
   }
@@ -22,8 +27,7 @@ class FormPageContainer extends Component {
   }
 
   handleSubmitForm = (data) => {
-    this.props.onSaveProperty(data)
-    this.closeForm()
+    this.props.onSaveProperty(data, !!this.props.property)
   }
 
   handleCloseForm = () => {
@@ -39,10 +43,6 @@ class FormPageContainer extends Component {
     history.push(nextPath)
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.property !== nextProps.property
-  }
-
   componentDidMount() {
     let {
       match: {
@@ -52,13 +52,31 @@ class FormPageContainer extends Component {
 
     this.handleLoadPropertyDetail(id)
   }
+
+  componentWillReceiveProps(nextProps) {
+    let {
+      propertyProgress: { isSaving }
+    } = this.props
+
+    let nextPropertyProcess = nextProps.propertyProgress
+    let nextIsSaving = nextPropertyProcess.isSaving
+    let nextError = nextPropertyProcess.error
+
+    if (isSaving && !nextIsSaving && !nextError) {
+      this.closeForm()
+    }
+  }
   
   render() {
-    let { property } = this.props
+    let {
+      property,
+      propertyProgress
+    } = this.props
 
     return (
       <FormPage
         property={ property }
+        propertyProgress={ propertyProgress }
         onSubmitForm={ this.handleSubmitForm }
         onCloseForm={ this.handleCloseForm }
       />
@@ -67,7 +85,8 @@ class FormPageContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  property: state.property
+  property: state.property,
+  propertyProgress: state.propertyProgress
 })
 
 const mapDispatchToProps = (dispatch) => ({

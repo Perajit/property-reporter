@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import PaperSheet from 'components/PaperSheet'
-import PropertySummary from 'components/PropertySummary'
+import PropertySummaryTable from 'components/PropertySummaryTable'
 
 import { PROPERTY_SUMMARY_TITLE } from 'constants/labels'
 
@@ -17,7 +17,7 @@ const SummaryPage = (props) => {
 
   return (
     <PaperSheet title={ PROPERTY_SUMMARY_TITLE }>
-      <PropertySummary
+      <PropertySummaryTable
         data={ propertySummary }
         isFetching={ isFetching }
       />
