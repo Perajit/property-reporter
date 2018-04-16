@@ -36,8 +36,8 @@ const createActions = (actionCreators, serviceFunction, ...payloads) => {
       .then((result) => {
         dispatch(createSuccessAction(result))
       })
-      .catch((err) => {
-        dispatch(createFailureAction(err))
+      .catch((error) => {
+        dispatch(createFailureAction(error))
       })
   }
 }
@@ -45,23 +45,15 @@ const createActions = (actionCreators, serviceFunction, ...payloads) => {
 export const loadProperties = () => {
   const createRequestAction = () => ({ type: GET_PROPERTIES_REQUEST })
   const createSuccessAction = (properties) => ({ type: GET_PROPERTIES_SUCCESS, properties })
-  const createFailureAction = (err) => ({ type: GET_PROPERTIES_FAILURE, error })
+  const createFailureAction = (error) => ({ type: GET_PROPERTIES_FAILURE, error })
 
   return createActions({ createRequestAction, createSuccessAction, createFailureAction }, propertyService.getProperties)
-}
-
-export const loadPropertySummary = () => {
-  const createRequestAction = () => ({ type: GET_PROPERTY_SUMMARY_REQUEST })
-  const createSuccessAction = (propertySummary) => ({ type: GET_PROPERTY_SUMMARY_SUCCESS, propertySummary })
-  const createFailureAction = (err) => ({ type: GET_PROPERTY_SUMMARY_FAILURE, error })
-
-  return createActions({ createRequestAction, createSuccessAction, createFailureAction }, propertyService.getPropertySummary)
 }
 
 export const saveProperty = (data) => {
   const createRequestAction = (data) => ({ type: SAVE_PROPERTY_REQUEST, data })
   const createSuccessAction = (savedProperty) => ({ type: SAVE_PROPERTY_SUCCESS, savedProperty })
-  const createFailureAction = (err) => ({ type: SAVE_PROPERTY_FAILURE, error })
+  const createFailureAction = (error) => ({ type: SAVE_PROPERTY_FAILURE, error })
 
   return createActions({ createRequestAction, createSuccessAction, createFailureAction }, propertyService.saveProperty, data)
 }
@@ -69,7 +61,7 @@ export const saveProperty = (data) => {
 export const deleteProperties = (ids) => {
   const createRequestAction = (ids) => ({ type: DELETE_PROPERTIES_REQUEST, ids })
   const createSuccessAction = () => ({ type: DELETE_PROPERTIES_SUCCESS, ids })
-  const createFailureAction = (err) => ({ type: DELETE_PROPERTIES_FAILURE, error })
+  const createFailureAction = (error) => ({ type: DELETE_PROPERTIES_FAILURE, error })
 
   return createActions({ createRequestAction, createSuccessAction, createFailureAction }, propertyService.deleteProperties, ids)
 }
@@ -81,4 +73,12 @@ export const loadPropertyDetail = (id) => {
   return (dispatch) => {
     dispatch({ type: GET_PROPERTY_DETAIL, property })
   }
+}
+
+export const loadPropertySummary = () => {
+  const createRequestAction = () => ({ type: GET_PROPERTY_SUMMARY_REQUEST })
+  const createSuccessAction = (propertySummary) => ({ type: GET_PROPERTY_SUMMARY_SUCCESS, propertySummary })
+  const createFailureAction = (error) => ({ type: GET_PROPERTY_SUMMARY_FAILURE, error })
+
+  return createActions({ createRequestAction, createSuccessAction, createFailureAction }, propertyService.getPropertySummary)
 }

@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import PropertyListTable from './PropertyListTable'
+import FetchableView from 'components/FetchableView'
 import PropertyListToolbar from './PropertyListToolbar'
+import PropertyListTable from './PropertyListTable'
 
 class PropertyList extends Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
+    isFetching: PropTypes.bool.isRequired,
     onDeleteProperties: PropTypes.func
   }
 
@@ -30,7 +32,10 @@ class PropertyList extends Component {
   }
 
   render() {
-    let { data } = this.props
+    let {
+      data,
+      isFetching
+    } = this.props
     
     let {
       filterKeyword,
@@ -40,17 +45,20 @@ class PropertyList extends Component {
     return (
       <div>
         <PropertyListToolbar
+          disableSearch={ isFetching }
           selectedRows={ selectedRows }
           onKeywordChange={ this.handleKeywordChange }
           onDeleteSelectedRows={ this.handleDeleteSelectedRows }
         />
-        <PropertyListTable
-          data={ data }
-          filter={ createFilter(filterKeyword) }
-          hover={ true }
-          selectable={ true }
-          onRowSelectionChange={ this.handleRowSelectionChange }
-        />
+        <FetchableView isFetching={ isFetching }>
+          <PropertyListTable
+            data={ data }
+            filter={ createFilter(filterKeyword) }
+            hover={ true }
+            selectable={ true }
+            onRowSelectionChange={ this.handleRowSelectionChange }
+          />
+        </FetchableView>
       </div>
     )
   }

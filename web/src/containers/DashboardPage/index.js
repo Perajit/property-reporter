@@ -8,6 +8,7 @@ import { loadPropertySummary } from 'actions/property'
 class SummaryPageContainer extends Component {
   static propTypes = {
     propertySummary: PropTypes.object.isRequired,
+    propertySummaryProgress: PropTypes.object.isRequired,
     onLoadPropertySummary: PropTypes.func.isRequired
   }
   
@@ -15,23 +16,28 @@ class SummaryPageContainer extends Component {
     this.props.onLoadPropertySummary()
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.propertySummary !== nextProps.propertySummary
-  }
-
   componentDidMount() {
     this.handleLoadPropertySummary()
   }
   
   render() {
+    let {
+      propertySummary,
+      propertySummaryProgress
+    } = this.props
+
     return (
-      <DashboardPage propertySummary={ this.props.propertySummary } />
+      <DashboardPage
+        propertySummary={ propertySummary }
+        propertySummaryProgress={ propertySummaryProgress }
+      />
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  propertySummary: state.propertySummary
+  propertySummary: state.propertySummary,
+  propertySummaryProgress: state.propertySummaryProgress
 })
 
 const mapDispatchToProps = (dispatch) => ({

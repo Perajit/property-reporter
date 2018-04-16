@@ -15,6 +15,7 @@ import { createToolbarStyles } from './PropertyListToolbarStyles'
 const PropertyListToolbar = (props) => {
   const {
     classes,
+    disableSearch,
     selectedRows,
     onDeleteSelectedRows,
     onKeywordChange
@@ -30,6 +31,7 @@ const PropertyListToolbar = (props) => {
     <Toolbar disableGutters className={ classes.root }>
       <div className={ classes.stretch }>
         <SearchInput
+          readOnly={ disableSearch }
           placeholder="Search for Properties"
           className={ classes.searchInput }
           onKeywordChange={ onKeywordChange }
@@ -58,6 +60,7 @@ const PropertyListToolbar = (props) => {
 
 PropertyListToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
+  disableSearch: PropTypes.bool.isRequired,
   selectedRows: PropTypes.array.isRequired,
   onDeleteSelectedRows: PropTypes.func,
   onKeywordChange: PropTypes.func

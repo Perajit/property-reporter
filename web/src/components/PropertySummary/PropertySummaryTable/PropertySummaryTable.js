@@ -11,12 +11,13 @@ const PropertySummaryTable = (props) => {
     }
   } = props
 
-  let overallRow = Object.assign({ projectName: 'Overall', highlight: true }, overall)
+  let data = list.length ?
+    list.concat(Object.assign({ projectName: 'Overall', highlight: true }, overall)) : list 
 
   return (
     <EnhancedTable
       columnConfigs={ getColumnConfigs() }
-      data={ list.concat(overallRow) }
+      data={ data }
     />
   )
 }

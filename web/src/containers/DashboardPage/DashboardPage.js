@@ -10,7 +10,12 @@ import PropertySummaryChart from 'components/PropertySummaryChart'
 import { DASHBOARD_TITLE } from 'constants/labels'
 
 const DashboardPage = (props) => {
-  let { propertySummary } = props
+  let {
+    propertySummary,
+    propertySummaryProgress: {
+      isFetching
+    }
+  } = props
 
   return (
     <div>
@@ -19,8 +24,13 @@ const DashboardPage = (props) => {
       </Typography>
       <Grid container justify="flex-start" alignItems="stretch">
         <Grid item>
-          <BasicCard title="Average Price">
-            <PropertySummaryChart data={ propertySummary } field="priceSummary/avg"
+          <BasicCard
+            title="Average Price"
+            isFetching={ isFetching }
+          >
+            <PropertySummaryChart
+              data={ propertySummary }
+              field="priceSummary/avg"
               title="Average Price"
               colors={ [
                 amber['A200']
@@ -29,8 +39,13 @@ const DashboardPage = (props) => {
           </BasicCard>
         </Grid>
         <Grid item>
-          <BasicCard title="Average Price / Size">
-            <PropertySummaryChart data={ propertySummary } field="ppsSummary/avg"
+          <BasicCard
+            title="Average Price / Size"
+            isFetching={ isFetching }
+          >
+            <PropertySummaryChart
+              data={ propertySummary }
+              field="ppsSummary/avg"
               title="Average Price / Size"
               colors={ [
                 green['A200']

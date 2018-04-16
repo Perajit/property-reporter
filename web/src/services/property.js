@@ -12,11 +12,6 @@ const getProperties = () => {
     .then((json) => json.properties)
 }
 
-const getPropertySummary = () => {
-  return request(`${PROPERTIES_ENDPOINT}/summary`)
-    .then((json) => json.propertySummary)
-}
-
 const saveProperty = (property) => {
   let requestOptions = {
     method: 'POST',
@@ -38,6 +33,11 @@ const deleteProperties = (ids) => {
 
   return request(`${PROPERTIES_ENDPOINT}?ids=${ids}`, requestOptions)
     .then((json) => json.deletedProperties)
+}
+
+const getPropertySummary = () => {
+  return request(`${PROPERTIES_ENDPOINT}/summary`)
+    .then((json) => json.propertySummary)
 }
 
 export default {
