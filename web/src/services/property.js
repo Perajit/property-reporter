@@ -12,7 +12,16 @@ const getProperties = () => {
     .then((json) => json.properties)
 }
 
-const saveProperty = (property) => {
+const saveProperty = (property, isNew) => {
+  if (isNew) {
+    return addProperty(property)
+  }
+  else {
+    return updateProperty(property)
+  }
+}
+
+const addProperty = (property) => {
   let requestOptions = {
     method: 'POST',
     headers: {
@@ -23,6 +32,19 @@ const saveProperty = (property) => {
 
   return request(PROPERTIES_ENDPOINT, requestOptions)
     .then((json) => json.savedProperties[0])
+}
+
+const updateProperty = (property) => {
+  let requestOptions = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(property)
+  }
+
+  return request(`${PROPERTIES_ENDPOINT}/${property.id}`, requestOptions)
+    .then((json) => json.savedProperty)
 }
 
 const deleteProperties = (ids) => {
