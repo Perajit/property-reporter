@@ -9,25 +9,30 @@ const PaperSheet = (props) => {
   const {
     classes,
     children,
-    title
+    title,
+    TitleIcon
   } = props
 
   return (
     <div>
-      <Typography variant="headline" component="h3" className={ classes.title } gutterBottom>
+      <Typography
+        variant="headline"
+        component="h3"
+        className={ classes.title }
+        gutterBottom
+      >
+        { TitleIcon ? <TitleIcon className={ classes.titleIcon } /> : null }
         { title }
       </Typography>
-      <Paper elevation={ 0 } className={ classes.root }>
-        { children }
-      </Paper>
+      { children }
     </div>
   )
 }
 
 PaperSheet.propTypes = {
   classes: PropTypes.object.isRequired,
-  title: PropTypes.string,
-  children: PropTypes.object
+  children: PropTypes.object,
+  title: PropTypes.string
 }
 
 export default withStyles(getSheetStyles())(PaperSheet)

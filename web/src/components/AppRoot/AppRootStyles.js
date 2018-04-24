@@ -1,5 +1,6 @@
 import { createMuiTheme } from 'material-ui/styles'
 import bluegrey from 'material-ui/colors/bluegrey'
+import teal from 'material-ui/colors/teal'
 
 export const createRootTheme = () => {
   let tableStyle = { marginTop: 0, marginBottom: 0 }
@@ -12,15 +13,11 @@ export const createRootTheme = () => {
   return createMuiTheme({
     palette: {
       background: {
-        main: bluegrey[400],
-        light: bluegrey[50],
+        main: bluegrey[50],
+        light: '#fafafa',
         dark: bluegrey[800]
       },
-      primary: {
-        main: bluegrey[900],
-        light: bluegrey[700],
-        dark: bluegrey[900]
-      }
+      primary: teal
     },
     typography: {
       fontFamily: 'Kanit',

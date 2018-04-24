@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import AssessmentIcon from 'material-ui-icons/Assessment'
 import PaperSheet from 'components/PaperSheet'
 import PropertySummaryTable from 'components/PropertySummaryTable'
 
@@ -16,7 +17,7 @@ const SummaryPage = (props) => {
   } = props
 
   return (
-    <PaperSheet title={ PROPERTY_SUMMARY_TITLE }>
+    <PaperSheet title={ PROPERTY_SUMMARY_TITLE } TitleIcon={ AssessmentIcon }>
       <PropertySummaryTable
         data={ propertySummary }
         isFetching={ isFetching }

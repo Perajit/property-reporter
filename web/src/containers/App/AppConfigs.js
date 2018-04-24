@@ -5,7 +5,6 @@ import FormPage from 'containers/FormPage'
 
 import HomeIcon from 'material-ui-icons/Home'
 import ViewListIcon from 'material-ui-icons/ViewList'
-import ViewModuleIcon from 'material-ui-icons/ViewModule'
 import AssessmentIcon from 'material-ui-icons/Assessment'
 
 import {
@@ -13,6 +12,10 @@ import {
   PROPERTY_SUMMARY_TITLE,
   PROPERTY_LIST_TITLE
 } from 'constants/labels'
+
+const mapComponentToIcon = (component) => {
+
+}
 
 export const getRoutes = () => {
   return [
