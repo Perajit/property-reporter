@@ -1,0 +1,6 @@
+export const APP_TITLE = 'Property Reporter'
+export const DASHBOARD_TITLE = 'Dashboard'
+export const PROPERTY_SUMMARY_TITLE = 'Property Summary'
+export const PROPERTY_LIST_TITLE = 'Property List'
+export const PROPERTY_ADD_TITLE = 'Add Property'
+export const PROPERTY_EDIT_TITLE = 'Edit Property'
